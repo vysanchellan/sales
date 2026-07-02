@@ -1,0 +1,270 @@
+"use client";
+
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { SlidersHorizontal, X } from "lucide-react";
+import {
+  properties as allProperties,
+  cities,
+  propertyTypes,
+  formatPrice,
+} from "@/lib/data/properties";
+import { getAgent } from "@/lib/data/agents";
+import type { PropertyStatus, PropertyType } from "@/lib/data/types";
+import { PropertyCard } from "@/components/PropertyCard";
+import { MagneticButton } from "@/components/animations/MagneticButton";
+
+type Sort = "newest" | "price-asc" | "price-desc" | "beds";
+
+const PAGE_SIZE = 6;
+const MAX = 25_000_000;
+
+interface Filters {
+  city: string;
+  type: string;
+  status: string;
+  agentId: string;
+  minBeds: number;
+  maxPrice: number;
+}
+
+const emptyFilters: Filters = {
+  city: "",
+  type: "",
+  status: "",
+  agentId: "",
+  minBeds: 0,
+  maxPrice: MAX,
+};
+
+export function ListingsView() {
+  const params = useSearchParams();
+  const [filters, setFilters] = useState<Filters>(emptyFilters);
+  const [sort, setSort] = useState<Sort>("newest");
+  const [page, setPage] = useState(1);
+
+  // Seed from query params (set by the hero search / agent links).
+  useEffect(() => {
+    setFilters({
+      city: params.get("city") ?? "",
+      type: params.get("type") ?? "",
+      status: params.get("status") ?? "",
+      agentId: params.get("agent") ?? "",
+      minBeds: Number(params.get("minBeds") ?? 0),
+      maxPrice: Number(params.get("maxPrice") ?? MAX),
+    });
+    setPage(1);
+  }, [params]);
+
+  const filtered = useMemo(() => {
+    const result = allProperties.filter((p) => {
+      if (filters.city && p.city !== filters.city) return false;
+      if (filters.type && p.type !== filters.type) return false;
+      if (filters.status && p.status !== filters.status) return false;
+      if (filters.agentId && p.agentId !== filters.agentId) return false;
+      if (filters.minBeds && p.bedrooms < filters.minBeds) return false;
+      // Only price-gate sale/rent items; the slider is in sale-price terms.
+      if (p.status !== "for-rent" && p.price > filters.maxPrice) return false;
+      return true;
+    });
+
+    result.sort((a, b) => {
+      switch (sort) {
+        case "price-asc":
+          return a.price - b.price;
+        case "price-desc":
+          return b.price - a.price;
+        case "beds":
+          return b.bedrooms - a.bedrooms;
+        default:
+          return +new Date(b.createdAt) - +new Date(a.createdAt);
+      }
+    });
+    return result;
+  }, [filters, sort]);
+
+  const visible = filtered.slice(0, page * PAGE_SIZE);
+  const activeAgent = filters.agentId ? getAgent(filters.agentId) : undefined;
+  const activeCount = Object.entries(filters).filter(([k, v]) =>
+    k === "maxPrice" ? v < MAX : k === "minBeds" ? v > 0 : Boolean(v)
+  ).length;
+
+  const update = <K extends keyof Filters>(key: K, value: Filters[K]) => {
+    setFilters((f) => ({ ...f, [key]: value }));
+    setPage(1);
+  };
+
+  return (
+    <div className="mx-auto max-w-[1400px] px-5 pb-28 pt-32 md:px-10">
+      <div className="mb-8">
+        <p className="mb-2 text-xs uppercase tracking-[0.3em] text-gold/70">The Portfolio</p>
+        <h1 className="font-display text-4xl text-cloud md:text-6xl">
+          {activeAgent ? `Represented by ${activeAgent.name}` : "All listings"}
+        </h1>
+      </div>
+
+      {/* Filter bar */}
+      <div className="sticky top-[72px] z-30 mb-10 rounded-2xl border border-cloud/10 bg-ink/70 p-4 backdrop-blur-xl">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-mist">
+            <SlidersHorizontal size={14} /> Filter
+          </span>
+
+          <Select value={filters.status} onChange={(v) => update("status", v)} label="Any status">
+            {(["for-sale", "for-rent", "sold"] as PropertyStatus[]).map((s) => (
+              <option key={s} value={s} className="bg-ink">
+                {s === "for-sale" ? "For sale" : s === "for-rent" ? "For rent" : "Sold"}
+              </option>
+            ))}
+          </Select>
+
+          <Select value={filters.city} onChange={(v) => update("city", v)} label="Anywhere">
+            {cities.map((c) => (
+              <option key={c} value={c} className="bg-ink">{c}</option>
+            ))}
+          </Select>
+
+          <Select value={filters.type} onChange={(v) => update("type", v)} label="Any type">
+            {propertyTypes.map((t) => (
+              <option key={t} value={t} className="bg-ink capitalize">{t}</option>
+            ))}
+          </Select>
+
+          <Select
+            value={String(filters.minBeds)}
+            onChange={(v) => update("minBeds", Number(v))}
+            label="Any beds"
+          >
+            {[1, 2, 3, 4, 5].map((n) => (
+              <option key={n} value={n} className="bg-ink">{n}+ beds</option>
+            ))}
+          </Select>
+
+          <label className="flex items-center gap-3 rounded-full bg-ink/60 px-4 py-2 text-xs text-mist">
+            <span>≤ €{(filters.maxPrice / 1_000_000).toFixed(1)}M</span>
+            <input
+              type="range"
+              min={500_000}
+              max={MAX}
+              step={250_000}
+              value={filters.maxPrice}
+              onChange={(e) => update("maxPrice", Number(e.target.value))}
+              className="w-28 accent-gold"
+            />
+          </label>
+
+          <div className="ml-auto flex items-center gap-3">
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as Sort)}
+              className="rounded-full bg-ink/60 px-4 py-2 text-xs text-cloud outline-none"
+            >
+              <option value="newest" className="bg-ink">Newest</option>
+              <option value="price-asc" className="bg-ink">Price · low to high</option>
+              <option value="price-desc" className="bg-ink">Price · high to low</option>
+              <option value="beds" className="bg-ink">Most bedrooms</option>
+            </select>
+            {activeCount > 0 && (
+              <button
+                onClick={() => {
+                  setFilters(emptyFilters);
+                  setPage(1);
+                }}
+                className="flex items-center gap-1 rounded-full border border-gold/30 px-3 py-2 text-xs text-gold-light hover:bg-gold/10"
+              >
+                <X size={12} /> Clear ({activeCount})
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <p className="mb-6 text-sm text-mist">
+        {filtered.length} {filtered.length === 1 ? "property" : "properties"}
+      </p>
+
+      {filtered.length === 0 ? (
+        <EmptyState onClear={() => setFilters(emptyFilters)} />
+      ) : (
+        <>
+          <motion.div layout className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <AnimatePresence mode="popLayout">
+              {visible.map((p) => (
+                <motion.div
+                  key={p.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.94 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.94 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <PropertyCard property={p} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {visible.length < filtered.length && (
+            <div className="mt-14 flex justify-center">
+              <MagneticButton
+                as="button"
+                onClick={() => setPage((p) => p + 1)}
+                className="rounded-full border border-gold/40 px-8 py-3 text-sm text-gold-light hover:bg-gold/10"
+              >
+                Load more ({filtered.length - visible.length} remaining)
+              </MagneticButton>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function Select({
+  value,
+  onChange,
+  label,
+  children,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className={`rounded-full px-4 py-2 text-xs outline-none ${
+        value ? "bg-gold/15 text-gold-light" : "bg-ink/60 text-mist"
+      }`}
+    >
+      <option value="" className="bg-ink">{label}</option>
+      {children}
+    </select>
+  );
+}
+
+function EmptyState({ onClear }: { onClear: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-cloud/15 py-24 text-center"
+    >
+      <h3 className="font-display text-2xl text-cloud">Nothing matches — yet</h3>
+      <p className="max-w-sm text-sm text-mist">
+        The portfolio is deliberately small. Try widening your criteria, or speak with an advisor
+        about off-market opportunities.
+      </p>
+      <button
+        onClick={onClear}
+        className="rounded-full bg-gold px-6 py-2.5 text-sm font-medium text-ink"
+      >
+        Clear filters
+      </button>
+    </motion.div>
+  );
+}

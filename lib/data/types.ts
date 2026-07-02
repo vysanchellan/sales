@@ -26,6 +26,12 @@ export interface Testimonial {
   transaction: "bought" | "sold";
 }
 
+export interface Room {
+  name: string;
+  caption: string;
+  image: string;
+}
+
 export interface Property {
   id: string;
   slug: string;
@@ -39,6 +45,7 @@ export interface Property {
   sqm: number;
   type: PropertyType;
   images: string[];
+  rooms: Room[];
   heroVideo?: string;
   description: string;
   features: string[];

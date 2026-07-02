@@ -9,7 +9,7 @@ import {
   formatPrice,
 } from "@/lib/data/properties";
 import { getAgent } from "@/lib/data/agents";
-import { Gallery } from "@/components/Gallery";
+import { RoomWalkthrough } from "@/components/RoomWalkthrough";
 import { PropertyMap } from "@/components/PropertyMap";
 import { SimilarCarousel } from "@/components/SimilarCarousel";
 import { InquiryForm } from "@/components/InquiryForm";
@@ -53,8 +53,11 @@ export default async function PropertyPage({
   const similar = getSimilar(property);
 
   return (
-    <article className="pt-24">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10">
+    <article>
+      {/* Full-bleed cinematic room-by-room walkthrough, opening on the cover. */}
+      <RoomWalkthrough rooms={property.rooms} title={property.title} />
+
+      <div className="mx-auto max-w-[1400px] px-5 pt-12 md:px-10">
         <Link
           href="/listings"
           className="mb-6 inline-flex items-center gap-2 text-sm text-mist transition-colors hover:text-gold"
@@ -62,9 +65,7 @@ export default async function PropertyPage({
           <ArrowLeft size={16} /> All listings
         </Link>
 
-        <Gallery images={property.images} title={property.title} heroVideo={property.heroVideo} />
-
-        <div className="mt-10 grid gap-12 lg:grid-cols-[1.6fr_1fr]">
+        <div className="mt-4 grid gap-12 lg:grid-cols-[1.6fr_1fr]">
           {/* Main column */}
           <div>
             <div className="flex flex-wrap items-center gap-3">

@@ -2,12 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // Local placeholder assets are SVG; allow them and skip the optimizer so
-    // the static/Vercel deploy works with no remote loader configured.
+    // Property/agent photography is hotlinked from Unsplash (already sized via
+    // URL params); the poster fallback is a local SVG. Optimizer is skipped so
+    // the static/Vercel deploy needs no image loader config.
     dangerouslyAllowSVG: true,
     unoptimized: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+    ],
   },
 };
 

@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { TextReveal } from "@/components/animations/TextReveal";
 import { HeroSearch } from "@/components/HeroSearch";
+import { LogoMark } from "@/components/Logo";
 import { EASE } from "@/lib/animations";
 
 const HERO_IMAGE =
@@ -57,10 +58,13 @@ export function Hero() {
         style={{ y: contentY, opacity: contentOpacity }}
         className="flex w-full max-w-4xl flex-col items-center text-center"
       >
+        {/* Brand mark draws itself on as the page loads */}
+        <LogoMark size={110} animate className="mb-4" />
+
         <motion.span
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE.outExpo }}
+          transition={{ delay: 1.6, duration: 0.9, ease: EASE.outExpo }}
           className="mb-6 rounded-full border border-gold/30 bg-gold/5 px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-gold-light"
         >
           Private Brokerage · Est. 1998
@@ -71,12 +75,13 @@ export function Hero() {
           text="Homes that outlast the [[people]] who build them"
           className="font-display text-4xl leading-[1.05] text-cloud sm:text-6xl md:text-7xl"
           stagger={0.07}
+          delay={1.75}
         />
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.9, ease: EASE.outExpo }}
+          transition={{ delay: 2.2, duration: 0.9, ease: EASE.outExpo }}
           className="mt-6 max-w-xl text-base text-mist md:text-lg"
         >
           A curated portfolio of architecturally significant estates, penthouses and land across
@@ -86,7 +91,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.95, duration: 1, ease: EASE.outExpo }}
+          transition={{ delay: 2.45, duration: 1, ease: EASE.outExpo }}
           className="mt-10 flex w-full justify-center"
         >
           <HeroSearch />

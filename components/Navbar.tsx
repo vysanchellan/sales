@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { MagneticButton } from "./animations/MagneticButton";
+import { Logo } from "./Logo";
 import { EASE } from "@/lib/animations";
 
 const links = [
@@ -48,12 +49,8 @@ export function Navbar() {
         }}
       >
         <nav className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 md:px-10">
-          <Link
-            href="/"
-            className="font-display text-2xl tracking-tight text-cloud"
-            aria-label="Kassora home"
-          >
-            KASS<span className="living-gradient">O</span>RA
+          <Link href="/" aria-label="Virelle home">
+            <Logo />
           </Link>
 
           <div className="hidden items-center gap-9 md:flex">
@@ -99,9 +96,7 @@ export function Navbar() {
             transition={{ duration: 0.6, ease: EASE.outExpo }}
           >
             <div className="flex h-[72px] items-center justify-between px-5">
-              <span className="font-display text-2xl text-cloud">
-                KASS<span className="living-gradient">O</span>RA
-              </span>
+              <Logo />
               <button onClick={() => setOpen(false)} aria-label="Close menu" className="text-cloud">
                 <X size={28} />
               </button>

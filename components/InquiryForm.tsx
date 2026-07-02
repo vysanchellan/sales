@@ -128,7 +128,7 @@ export function InquiryForm({ propertyTitle, propertySlug, compact = false }: Pr
             {state === "error" && (
               <p className="flex items-center gap-2 text-sm text-red-400">
                 <AlertCircle size={16} /> Something went wrong. Please try again or email
-                hello@kassora.com.
+                hello@virelle.com.
               </p>
             )}
 

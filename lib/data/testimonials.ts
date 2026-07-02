@@ -9,7 +9,7 @@ export const testimonials: Testimonial[] = [
     name: "Sofia & Marcus Delacroix",
     photo: face("1544005313-94ddf0286df2"),
     quote:
-      "Kassora found us a home we didn't know existed — off-market, exactly to our brief. The entire process felt like it was handled before we even asked.",
+      "Virelle found us a home we didn't know existed — off-market, exactly to our brief. The entire process felt like it was handled before we even asked.",
     role: "Private buyers",
     propertyTitle: "Villa Serena, Amalfi Coast",
     transaction: "bought",
@@ -39,7 +39,7 @@ export const testimonials: Testimonial[] = [
     name: "The Nakamura Family",
     photo: face("1521119989659-a83eee488004"),
     quote:
-      "Buying across borders is usually a nightmare of paperwork and time zones. Kassora made it feel like a single conversation from start to keys.",
+      "Buying across borders is usually a nightmare of paperwork and time zones. Virelle made it feel like a single conversation from start to keys.",
     role: "International buyers",
     propertyTitle: "Lakeview Residence, Zürich",
     transaction: "bought",

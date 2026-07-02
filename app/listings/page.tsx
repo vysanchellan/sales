@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import { ListingsView } from "@/components/ListingsView";
 
 export const metadata = {
-  title: "Listings — Kassora",
-  description: "Browse the full Kassora portfolio of estates, penthouses, homes and land.",
+  title: "Listings — Virelle",
+  description: "Browse the full Virelle portfolio of estates, penthouses, homes and land.",
 };
 
 export default function ListingsPage() {

@@ -1,4 +1,4 @@
-# Kassora
+# Virelle
 
 A cinematic, animation-forward marketing site for a fictional private real-estate
 brokerage. Fully static / client-side — **no database, no backend, no auth.** All

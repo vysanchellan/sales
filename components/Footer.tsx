@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Instagram, Linkedin, Twitter, ArrowRight } from "lucide-react";
 import { MagneticButton } from "./animations/MagneticButton";
+import { Logo } from "./Logo";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -13,9 +14,7 @@ export function Footer() {
     <footer className="relative border-t border-gold/10 bg-ink-soft/60">
       <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] md:px-10 md:py-24">
         <div>
-          <span className="font-display text-3xl text-cloud">
-            KASS<span className="living-gradient">O</span>RA
-          </span>
+          <Logo markSize={30} />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist">
             A private brokerage for architecturally significant homes across Europe. Discretion,
             pace, and an eye for the enduring.
@@ -49,7 +48,7 @@ export function Footer() {
             <li>London · +44 20 7100 4455</li>
             <li>Zürich · +41 44 500 2210</li>
             <li>Amalfi · +39 06 4200 1180</li>
-            <li>hello@kassora.com</li>
+            <li>hello@virelle.com</li>
           </ul>
         </div>
 
@@ -93,7 +92,7 @@ export function Footer() {
 
       <div className="border-t border-gold/10 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-2 px-5 text-xs text-mist/70 md:flex-row md:px-10">
-          <span>© {new Date().getFullYear()} Kassora. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Virelle. All rights reserved.</span>
           <span>Crafted with restraint · Static site · No trackers</span>
         </div>
       </div>

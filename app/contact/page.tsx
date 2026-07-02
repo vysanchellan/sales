@@ -4,8 +4,8 @@ import { TextReveal } from "@/components/animations/TextReveal";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 
 export const metadata = {
-  title: "Contact — Kassora",
-  description: "Begin a private conversation with a Kassora advisor.",
+  title: "Contact — Virelle",
+  description: "Begin a private conversation with a Virelle advisor.",
 };
 
 const offices = [
@@ -35,13 +35,13 @@ export default function ContactPage() {
           <ScrollReveal delay={0.25}>
             <div className="mt-10 space-y-6">
               <a
-                href="mailto:hello@kassora.com"
+                href="mailto:hello@virelle.com"
                 className="flex items-center gap-3 text-cloud transition-colors hover:text-gold"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
                   <Mail size={16} />
                 </span>
-                hello@kassora.com
+                hello@virelle.com
               </a>
               <a
                 href="tel:+442071004455"

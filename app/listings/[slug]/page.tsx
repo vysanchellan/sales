@@ -27,9 +27,9 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const property = getProperty(slug);
-  if (!property) return { title: "Not found — Kassora" };
+  if (!property) return { title: "Not found — Virelle" };
   return {
-    title: `${property.title}, ${property.city} — Kassora`,
+    title: `${property.title}, ${property.city} — Virelle`,
     description: property.description.slice(0, 150),
   };
 }

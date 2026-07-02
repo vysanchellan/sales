@@ -7,7 +7,7 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { MagneticButton } from "@/components/animations/MagneticButton";
 
 export const metadata = {
-  title: "The Firm — Kassora",
+  title: "The Firm — Virelle",
   description: "Nearly three decades placing people in the right home.",
 };
 
@@ -38,7 +38,7 @@ export default function AboutPage() {
         />
         <ScrollReveal delay={0.2}>
           <p className="mx-auto mt-6 max-w-xl text-mist">
-            Kassora is a private brokerage, not a portal. We keep the portfolio small on purpose, so
+            Virelle is a private brokerage, not a portal. We keep the portfolio small on purpose, so
             that every home receives the full attention of a specialist who knows its market
             intimately.
           </p>

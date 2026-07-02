@@ -1,8 +1,8 @@
 import { AgentsView } from "@/components/AgentsView";
 
 export const metadata = {
-  title: "Advisors — Kassora",
-  description: "Meet the Kassora advisors — a small bench of market specialists.",
+  title: "Advisors — Virelle",
+  description: "Meet the Virelle advisors — a small bench of market specialists.",
 };
 
 export default function AgentsPage() {

@@ -40,7 +40,7 @@ export function AboutStats() {
           />
           <ScrollReveal delay={0.15}>
             <p className="mt-6 max-w-lg leading-relaxed text-mist">
-              Kassora was founded on a quiet conviction: that the right home is found, not sold. For
+              Virelle was founded on a quiet conviction: that the right home is found, not sold. For
               nearly three decades we have represented a small, deliberate portfolio — advising a
               private clientele with patience, candour, and an unfashionable respect for the long
               view.

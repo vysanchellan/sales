@@ -8,12 +8,12 @@ import { CursorGlow } from "@/components/animations/CursorGlow";
 import { ScrollProgress } from "@/components/animations/ScrollProgress";
 
 export const metadata: Metadata = {
-  title: "Kassora — Architecturally Significant Homes",
+  title: "Virelle — Architecturally Significant Homes",
   description:
     "A private brokerage for architecturally significant homes across Europe. Discretion, pace, and an eye for the enduring.",
-  keywords: ["luxury real estate", "estates", "penthouses", "villas", "Kassora"],
+  keywords: ["luxury real estate", "estates", "penthouses", "villas", "Virelle"],
   openGraph: {
-    title: "Kassora — Architecturally Significant Homes",
+    title: "Virelle — Architecturally Significant Homes",
     description: "A private brokerage for the enduring.",
     type: "website",
   },

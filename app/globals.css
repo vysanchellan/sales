@@ -2,17 +2,19 @@
 @plugin "tailwindcss-animate";
 
 @theme {
-  --color-ink: #0a0a0f;
-  --color-ink-soft: #12121a;
-  --color-ink-mute: #1b1b26;
-  --color-cloud: #f5f3ee;
-  --color-mist: #b8b5ad;
+  --color-ink: #0a0e0d;
+  --color-ink-soft: #111716;
+  --color-ink-mute: #1a2321;
+  --color-cloud: #eef2ee;
+  --color-mist: #93a49d;
 
-  --color-gold: #c9a24b;
-  --color-gold-light: #e8cf8f;
-  --color-gold-deep: #9c7a2c;
-  --color-indigo: #4b53c9;
-  --color-indigo-light: #8f95e8;
+  /* Primary accent — jade (token kept as "gold" so utility classes cascade) */
+  --color-gold: #3fc196;
+  --color-gold-light: #8ce8c6;
+  --color-gold-deep: #268f6c;
+  /* Secondary accent — warm coral (token kept as "indigo") */
+  --color-indigo: #e57d64;
+  --color-indigo-light: #f4a893;
 
   --font-display: "Georgia", "Times New Roman", serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,

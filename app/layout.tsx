@@ -1,5 +1,19 @@
 import type { Metadata } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
+
+// Editorial pairing: Fraunces (high-contrast serif with optical sizing) for
+// display, Inter for UI text. Loaded as CSS variables so globals.css owns the
+// font stacks.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  axes: ["opsz", "SOFT", "WONK"],
+});
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { MotionProvider } from "@/components/MotionProvider";
 import { Navbar } from "@/components/Navbar";
@@ -23,7 +37,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="grain" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`grain ${fraunces.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Apply the saved theme before paint to avoid a flash of the wrong one */}
         <script

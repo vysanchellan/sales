@@ -90,7 +90,7 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="relative block h-[70svh] w-full overflow-hidden rounded-2xl"
+              className="relative block h-[70svh] w-full overflow-hidden rounded-lg"
             >
               <Image src={r.image} alt={`${title} — ${r.name}`} fill priority={i === 0} sizes="100vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />

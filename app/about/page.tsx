@@ -53,7 +53,7 @@ export default function AboutPage() {
         <div className="grid gap-8 md:grid-cols-3">
           {values.map((v, i) => (
             <ScrollReveal key={v.title} delay={i * 0.1}>
-              <div className="h-full rounded-2xl border border-cloud/10 bg-ink-soft p-8">
+              <div className="h-full rounded-lg border border-cloud/10 bg-ink-soft p-8">
                 <span className="font-display text-5xl text-gold/30">0{i + 1}</span>
                 <h3 className="mt-4 font-display text-2xl text-cloud">{v.title}</h3>
                 <p className="mt-3 text-mist">{v.body}</p>

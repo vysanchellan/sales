@@ -32,7 +32,7 @@ export function AgentsView() {
             <TiltCard max={7} className="h-full">
               <button
                 onClick={() => setActive(agent)}
-                className="group relative block h-full w-full overflow-hidden rounded-2xl border border-cloud/10 bg-ink-soft text-left"
+                className="group relative block h-full w-full overflow-hidden rounded-lg border border-cloud/10 bg-ink-soft text-left"
               >
                 <div className="relative aspect-[4/5] overflow-hidden">
                   <Image
@@ -84,7 +84,7 @@ function AgentModal({ agent, onClose }: { agent: Agent; onClose: () => void }) {
       onClick={onClose}
     >
       <motion.div
-        className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-cloud/10 bg-ink-soft"
+        className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-lg border border-cloud/10 bg-ink-soft"
         initial={{ opacity: 0, y: 40, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.98 }}

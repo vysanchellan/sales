@@ -33,7 +33,7 @@ export function PropertyCard({
     <TiltCard max={6} className={`h-full ${className}`}>
       <Link
         href={`/listings/${property.slug}`}
-        className="group block h-full overflow-hidden rounded-2xl border border-cloud/10 bg-ink-soft"
+        className="group block h-full overflow-hidden rounded-lg border border-cloud/10 bg-ink-soft"
       >
         <div className="relative aspect-[4/3] overflow-hidden">
           <motion.div
@@ -68,7 +68,7 @@ export function PropertyCard({
           </div>
         </div>
 
-        <div className="flex items-center justify-between px-5 py-4">
+        <div className="flex items-center justify-between border-t border-cloud/10 px-5 py-4">
           <span className="font-display text-lg text-gold-light">
             {formatPrice(property.price, property.status)}
           </span>

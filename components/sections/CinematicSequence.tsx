@@ -79,7 +79,7 @@ export function CinematicSequence() {
     return (
       <section className="space-y-3 px-3">
         {cinematicReel.map((r, i) => (
-          <div key={i} className="relative h-[70svh] w-full overflow-hidden rounded-2xl">
+          <div key={i} className="relative h-[70svh] w-full overflow-hidden rounded-lg">
             <Image src={r.image} alt={kickers[i]} fill sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">

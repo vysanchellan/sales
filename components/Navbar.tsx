@@ -61,7 +61,7 @@ export function Navbar() {
               <MagneticButton key={l.href} as="div" strength={0.25}>
                 <Link
                   href={l.href}
-                  className={`group relative text-sm tracking-wide transition-colors ${
+                  className={`group relative text-xs uppercase tracking-[0.18em] transition-colors ${
                     pathname.startsWith(l.href) ? "text-gold" : "text-mist hover:text-cloud"
                   }`}
                 >
@@ -73,7 +73,7 @@ export function Navbar() {
             <MagneticButton
               as="a"
               href="/contact"
-              className="rounded-full border border-gold/40 bg-gold/5 px-5 py-2 text-sm text-gold-light transition-colors hover:bg-gold/15"
+              className="rounded-full border border-gold/40 bg-gold/5 px-5 py-2 text-xs uppercase tracking-[0.14em] text-gold-light transition-colors hover:bg-gold/15"
             >
               Enquire
             </MagneticButton>

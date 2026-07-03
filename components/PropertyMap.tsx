@@ -20,7 +20,7 @@ export function PropertyMap({
   const src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-cloud/10">
+    <div className="overflow-hidden rounded-lg border border-cloud/10">
       <div className="flex items-center gap-2 border-b border-cloud/10 bg-ink-soft px-5 py-3 text-sm text-mist">
         <MapPin size={15} className="text-gold" /> {label}
       </div>

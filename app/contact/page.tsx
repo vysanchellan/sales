@@ -71,7 +71,7 @@ export default function ContactPage() {
         </div>
 
         <ScrollReveal delay={0.2}>
-          <div className="rounded-2xl border border-cloud/10 bg-ink-soft p-6 md:p-8">
+          <div className="rounded-lg border border-cloud/10 bg-ink-soft p-6 md:p-8">
             <InquiryForm />
           </div>
         </ScrollReveal>

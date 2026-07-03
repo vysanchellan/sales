@@ -19,27 +19,27 @@ export function AboutStats() {
     target: ref,
     offset: ["start end", "end start"],
   });
-  // Parallax: background moves at a different rate than the numbers.
-  const bgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  // The numbers drift at a slightly different rate than the copy — quiet depth.
   const numbersY = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
 
   return (
-    <section ref={ref} className="relative overflow-hidden border-y border-gold/10 py-28 md:py-36">
-      <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10">
-        <div className="absolute left-1/4 top-0 h-[38vw] w-[38vw] rounded-full bg-indigo/10 blur-[130px]" />
-        <div className="absolute bottom-0 right-1/4 h-[34vw] w-[34vw] rounded-full bg-gold/10 blur-[120px]" />
-      </motion.div>
+    <section ref={ref} className="mx-auto max-w-[1400px] px-5 py-24 md:px-10 md:py-32">
+      <header className="mb-16 border-t border-cloud/10 pt-6">
+        <p className="flex items-baseline gap-3 text-xs uppercase tracking-[0.22em] text-mist">
+          <span className="font-display tabular-nums text-gold">(02)</span>
+          The Firm
+        </p>
+      </header>
 
-      <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-5 md:grid-cols-2 md:px-10">
+      <div className="grid items-start gap-16 md:grid-cols-2">
         <div>
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-gold/70">The Firm</p>
           <TextReveal
             as="h2"
             text="We don't sell houses. We place people in the [[right]] one."
-            className="font-display text-4xl leading-[1.1] text-cloud md:text-5xl"
+            className="font-display text-4xl leading-[1.06] text-cloud md:text-5xl"
           />
           <ScrollReveal delay={0.15}>
-            <p className="mt-6 max-w-lg leading-relaxed text-mist">
+            <p className="mt-6 max-w-md leading-relaxed text-mist">
               Virelle was founded on a quiet conviction: that the right home is found, not sold. For
               nearly three decades we have represented a small, deliberate portfolio — advising a
               private clientele with patience, candour, and an unfashionable respect for the long
@@ -48,16 +48,16 @@ export function AboutStats() {
           </ScrollReveal>
         </div>
 
-        <motion.div
-          style={{ y: numbersY }}
-          className="grid grid-cols-2 gap-x-8 gap-y-12"
-        >
-          {stats.map((s) => (
-            <div key={s.label} className="border-l border-gold/25 pl-5">
-              <div className="font-display text-4xl text-gold-light md:text-6xl">
+        <motion.div style={{ y: numbersY }} className="grid grid-cols-2">
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={`border-t border-cloud/10 px-1 py-8 ${i % 2 === 0 ? "pr-8" : "pl-8"}`}
+            >
+              <p className="font-display text-4xl text-cloud md:text-6xl">
                 <CountUp value={s.value} suffix={s.suffix} />
-              </div>
-              <p className="mt-2 text-sm text-mist">{s.label}</p>
+              </p>
+              <p className="mt-2 text-xs uppercase tracking-[0.16em] text-mist">{s.label}</p>
             </div>
           ))}
         </motion.div>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { TextReveal } from "@/components/animations/TextReveal";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
@@ -8,32 +7,39 @@ import { MagneticButton } from "@/components/animations/MagneticButton";
 
 export function ContactCTA() {
   return (
-    <section className="relative overflow-hidden py-32 md:py-44">
-      <div className="absolute left-1/2 top-1/2 -z-10 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/8 blur-[140px] blob-drift" />
+    <section className="mx-auto max-w-[1400px] px-5 py-24 md:px-10 md:py-36">
+      <header className="mb-16 border-t border-cloud/10 pt-6">
+        <p className="flex items-baseline gap-3 text-xs uppercase tracking-[0.22em] text-mist">
+          <span className="font-display tabular-nums text-gold">(04)</span>
+          Enquiries
+        </p>
+      </header>
 
-      <div className="mx-auto max-w-3xl px-5 text-center">
+      <div className="grid items-end gap-12 md:grid-cols-[1.6fr_1fr]">
         <TextReveal
           as="h2"
           text="Begin a [[conversation]]"
-          className="font-display text-5xl text-cloud md:text-7xl"
+          className="font-display text-5xl leading-[0.98] text-cloud md:text-8xl"
         />
-        <ScrollReveal delay={0.15}>
-          <p className="mx-auto mt-6 max-w-lg text-mist">
-            Whether you are acquiring, selling, or simply curious about the market, the first step is
-            a private conversation. No pressure, no register — only counsel.
-          </p>
-        </ScrollReveal>
-        <ScrollReveal delay={0.3} className="mt-10 flex justify-center">
-          <MagneticButton
-            as="a"
-            href="/contact"
-            strength={0.5}
-            className="group flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-onaccent"
-          >
-            Speak with an advisor
-            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-          </MagneticButton>
-        </ScrollReveal>
+        <div>
+          <ScrollReveal delay={0.15}>
+            <p className="max-w-sm text-[15px] leading-relaxed text-mist">
+              Whether you are acquiring, selling, or simply curious about the market, the first step
+              is a private conversation. No pressure, no register — only counsel.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.3} className="mt-8">
+            <MagneticButton
+              as="a"
+              href="/contact"
+              strength={0.5}
+              className="group inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-onaccent"
+            >
+              Speak with an advisor
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            </MagneticButton>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );

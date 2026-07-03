@@ -66,7 +66,7 @@ export function InquiryForm({ propertyTitle, propertySlug, compact = false }: Pr
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col items-center gap-3 rounded-2xl border border-gold/25 bg-gold/5 p-8 text-center"
+            className="flex flex-col items-center gap-3 rounded-lg border border-gold/25 bg-gold/5 p-8 text-center"
           >
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-onaccent">
               <Check size={22} />

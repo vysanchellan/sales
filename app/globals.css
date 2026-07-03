@@ -19,9 +19,9 @@
   /* Text that sits on an accent fill — stays dark in both themes */
   --color-onaccent: #07110d;
 
-  --font-display: "Georgia", "Times New Roman", serif;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+  --font-display: var(--font-fraunces), "Georgia", "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
@@ -117,24 +117,27 @@ html.lenis body {
 
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  font-weight: 480;
+  letter-spacing: -0.025em;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 40, "WONK" 0;
 }
 
-/* Living gradient text used on key words site-wide */
+/* Living gradient — tonal jade drift, deliberately restrained (no rainbow) */
 .living-gradient {
   background: linear-gradient(
     100deg,
-    var(--color-gold) 0%,
-    var(--color-gold-light) 25%,
-    var(--color-indigo-light) 50%,
-    var(--color-gold-light) 75%,
-    var(--color-gold) 100%
+    var(--color-gold-deep) 0%,
+    var(--color-gold) 30%,
+    var(--color-gold-light) 50%,
+    var(--color-gold) 70%,
+    var(--color-gold-deep) 100%
   );
-  background-size: 300% 100%;
+  background-size: 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradient-drift 8s linear infinite;
+  animation: gradient-drift 9s linear infinite;
 }
 
 @keyframes gradient-drift {

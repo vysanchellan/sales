@@ -103,7 +103,7 @@ export default async function PropertyPage({
             {/* Parallax feature band with clip-path reveal */}
             <div className="mt-12 grid gap-4 sm:grid-cols-2">
               {property.images.slice(0, 2).map((img, i) => (
-                <Parallax key={img} speed={i === 0 ? 0.25 : 0.4} className="overflow-hidden rounded-2xl">
+                <Parallax key={img} speed={i === 0 ? 0.25 : 0.4} className="overflow-hidden rounded-lg">
                   <div className="relative aspect-[4/3]">
                     <Image
                       src={img}
@@ -143,7 +143,7 @@ export default async function PropertyPage({
 
           {/* Sticky sidebar */}
           <aside className="lg:sticky lg:top-24 lg:h-fit">
-            <div className="rounded-2xl border border-cloud/10 bg-ink-soft p-6">
+            <div className="rounded-lg border border-cloud/10 bg-ink-soft p-6">
               <p className="text-xs uppercase tracking-wider text-mist">Guide price</p>
               <p className="mt-1 font-display text-3xl text-gold-light">
                 {formatPrice(property.price, property.status)}

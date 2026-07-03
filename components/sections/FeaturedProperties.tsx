@@ -7,10 +7,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Bed, Bath, Maximize, MapPin } from "lucide-react";
+import { Bed, Bath, Maximize, MapPin } from "lucide-react";
 import { getFeatured, formatPrice } from "@/lib/data/properties";
 import type { Property } from "@/lib/data/types";
-import { TextReveal } from "@/components/animations/TextReveal";
+import { SectionHeader } from "@/components/SectionHeader";
 import { TiltCard } from "@/components/animations/TiltCard";
 import { usePrefersReducedMotion } from "@/lib/hooks/useReducedMotion";
 
@@ -66,23 +66,12 @@ export function FeaturedProperties() {
 
   return (
     <section className="mx-auto max-w-[1400px] px-5 py-24 md:px-10 md:py-32">
-      <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-gold/70">The Collection</p>
-          <TextReveal
-            as="h2"
-            text="Featured [[residences]]"
-            className="font-display text-4xl text-cloud md:text-6xl"
-          />
-        </div>
-        <Link
-          href="/listings"
-          className="group flex items-center gap-2 text-sm text-mist transition-colors hover:text-gold"
-        >
-          View all listings
-          <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </Link>
-      </div>
+      <SectionHeader
+        index="01"
+        label="The Collection"
+        title="Featured [[residences]]"
+        link={{ href: "/listings", label: "All listings" }}
+      />
 
       <div
         ref={gridRef}
@@ -111,7 +100,7 @@ function FeaturedCard({
     <TiltCard max={5} className="h-full">
       <Link
         href={`/listings/${property.slug}`}
-        className="group relative block h-full min-h-[240px] overflow-hidden rounded-2xl border border-cloud/10 bg-ink-soft"
+        className="group relative block h-full min-h-[240px] overflow-hidden rounded-lg border border-cloud/10 bg-ink-soft"
       >
         {/* Image fills the entire cell — no aspect-ratio gaps at any span size */}
         <motion.div

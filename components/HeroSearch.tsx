@@ -34,7 +34,7 @@ export function HeroSearch() {
   return (
     <form
       onSubmit={submit}
-      className="w-full max-w-3xl rounded-2xl border border-cloud/15 bg-ink/50 p-3 backdrop-blur-xl"
+      className="w-full rounded-lg border border-cloud/15 bg-ink/50 p-3 backdrop-blur-xl"
     >
       <div className="mb-3 flex w-fit rounded-full bg-ink/60 p-1 text-sm">
         {(["for-sale", "for-rent"] as const).map((d) => (

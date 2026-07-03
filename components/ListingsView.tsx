@@ -126,15 +126,18 @@ export function ListingsView() {
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 pb-28 pt-32 md:px-10">
-      <div className="mb-8">
-        <p className="mb-2 text-xs uppercase tracking-[0.3em] text-gold/70">The Portfolio</p>
-        <h1 className="font-display text-4xl text-cloud md:text-6xl">
+      <div className="mb-10 border-t border-cloud/10 pt-6">
+        <p className="mb-6 flex items-baseline gap-3 text-xs uppercase tracking-[0.22em] text-mist">
+          <span className="font-display tabular-nums text-gold">(01)</span>
+          The Portfolio
+        </p>
+        <h1 className="font-display text-4xl leading-[1.02] text-cloud md:text-6xl">
           {activeAgent ? `Represented by ${activeAgent.name}` : "All listings"}
         </h1>
       </div>
 
       {/* Filter bar */}
-      <div className="sticky top-[72px] z-30 mb-10 rounded-2xl border border-cloud/10 bg-ink/70 p-4 backdrop-blur-xl">
+      <div className="sticky top-[72px] z-30 mb-10 rounded-lg border border-cloud/10 bg-ink/70 p-4 backdrop-blur-xl">
         <div className="flex flex-wrap items-center gap-3">
           <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-mist">
             <SlidersHorizontal size={14} /> Filter
@@ -269,7 +272,7 @@ function EmptyState({ onClear }: { onClear: () => void }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-cloud/15 py-24 text-center"
+      className="flex flex-col items-center gap-4 rounded-lg border border-dashed border-cloud/15 py-24 text-center"
     >
       <h3 className="font-display text-2xl text-cloud">Nothing matches — yet</h3>
       <p className="max-w-sm text-sm text-mist">

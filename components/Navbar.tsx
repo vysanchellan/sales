@@ -25,6 +25,13 @@ export function Navbar() {
 
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 40));
 
+  // These routes open on a full-bleed dark hero (home + property detail), so a
+  // transparent nav over them needs light content in BOTH themes. Anywhere
+  // else, or once scrolled onto the solid bar, the nav follows the theme.
+  const overDarkHero =
+    pathname === "/" || /^\/listings\/.+/.test(pathname);
+  const lightNav = overDarkHero && !scrolled;
+
   // Lock body scroll while the mobile menu is open.
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -53,7 +60,7 @@ export function Navbar() {
       >
         <nav className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 md:px-10">
           <Link href="/" aria-label="Virelle home">
-            <Logo />
+            <Logo light={lightNav} />
           </Link>
 
           <div className="hidden items-center gap-9 md:flex">
@@ -62,7 +69,13 @@ export function Navbar() {
                 <Link
                   href={l.href}
                   className={`group relative text-xs uppercase tracking-[0.18em] transition-colors ${
-                    pathname.startsWith(l.href) ? "text-gold" : "text-mist hover:text-cloud"
+                    pathname.startsWith(l.href)
+                      ? lightNav
+                        ? "text-ember"
+                        : "text-gold"
+                      : lightNav
+                        ? "text-snow/70 hover:text-snow"
+                        : "text-mist hover:text-cloud"
                   }`}
                 >
                   {l.label}
@@ -73,7 +86,11 @@ export function Navbar() {
             <MagneticButton
               as="a"
               href="/contact"
-              className="rounded-full border border-gold/40 bg-gold/5 px-5 py-2 text-xs uppercase tracking-[0.14em] text-gold-light transition-colors hover:bg-gold/15"
+              className={`rounded-full border px-5 py-2 text-xs uppercase tracking-[0.14em] transition-colors ${
+                lightNav
+                  ? "border-snow/40 bg-snow/5 text-snow hover:bg-snow/15"
+                  : "border-gold/40 bg-gold/5 text-gold-light hover:bg-gold/15"
+              }`}
             >
               Enquire
             </MagneticButton>
@@ -83,7 +100,7 @@ export function Navbar() {
           <div className="flex items-center gap-3 md:hidden">
             <ThemeToggle />
             <button
-              className="text-cloud"
+              className={lightNav ? "text-snow" : "text-cloud"}
               onClick={() => setOpen(true)}
               aria-label="Open menu"
             >

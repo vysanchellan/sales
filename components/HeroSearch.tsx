@@ -34,16 +34,16 @@ export function HeroSearch() {
   return (
     <form
       onSubmit={submit}
-      className="w-full rounded-lg border border-cloud/15 bg-ink/50 p-3 backdrop-blur-xl"
+      className="w-full rounded-lg border border-snow/12 bg-night/45 p-3 backdrop-blur-2xl"
     >
-      <div className="mb-3 flex w-fit rounded-full bg-ink/60 p-1 text-sm">
+      <div className="mb-3 flex w-fit rounded-full bg-night/50 p-1 text-sm ring-1 ring-snow/10">
         {(["for-sale", "for-rent"] as const).map((d) => (
           <button
             key={d}
             type="button"
             onClick={() => setDeal(d)}
             className={`rounded-full px-5 py-1.5 transition-colors ${
-              deal === d ? "bg-gold text-onaccent" : "text-mist hover:text-cloud"
+              deal === d ? "bg-gold text-onaccent" : "text-snow/60 hover:text-snow"
             }`}
           >
             {d === "for-sale" ? "Buy" : "Rent"}
@@ -53,34 +53,36 @@ export function HeroSearch() {
 
       <div className="grid gap-3 md:grid-cols-[1.2fr_1fr_1.3fr_auto] md:items-end">
         <div className="flex flex-col gap-1">
-          <span className="px-1 text-[11px] uppercase tracking-wider text-mist/70">Location</span>
+          <span className="px-1 text-[11px] uppercase tracking-wider text-snow/55">Location</span>
           <Dropdown
+            tone="dark"
             options={locationOptions}
             value={location}
             onChange={setLocation}
             icon={<MapPin size={16} />}
             placeholder="Anywhere"
-            buttonClassName="rounded-xl bg-ink/60 px-3 py-2.5 text-sm hover:bg-ink/80"
+            buttonClassName="rounded-xl bg-night/50 px-3 py-2.5 text-sm ring-1 ring-snow/10 hover:bg-night/70"
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <span className="px-1 text-[11px] uppercase tracking-wider text-mist/70">Type</span>
+          <span className="px-1 text-[11px] uppercase tracking-wider text-snow/55">Type</span>
           <Dropdown
+            tone="dark"
             options={typeOptions}
             value={type}
             onChange={setType}
             icon={<Home size={16} />}
             placeholder="Any type"
-            buttonClassName="rounded-xl bg-ink/60 px-3 py-2.5 text-sm hover:bg-ink/80"
+            buttonClassName="rounded-xl bg-night/50 px-3 py-2.5 text-sm ring-1 ring-snow/10 hover:bg-night/70"
           />
         </div>
 
         <label className="flex flex-col gap-1">
-          <span className="px-1 text-[11px] uppercase tracking-wider text-mist/70">
+          <span className="px-1 text-[11px] uppercase tracking-wider text-snow/55">
             Max price · €{(maxPrice / 1_000_000).toFixed(1)}M
           </span>
-          <div className="flex items-center rounded-xl bg-ink/60 px-3 py-3.5">
+          <div className="flex items-center rounded-xl bg-night/50 px-3 py-3.5 ring-1 ring-snow/10">
             <input
               type="range"
               min={500_000}

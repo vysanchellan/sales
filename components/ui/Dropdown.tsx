@@ -22,6 +22,8 @@ interface Props {
   align?: "left" | "right";
   // When true, styles the trigger as an active/filled pill (for filter bars).
   active?: boolean;
+  // "dark" forces ivory-on-dark styling regardless of theme (hero over photo).
+  tone?: "auto" | "dark";
 }
 
 /**
@@ -40,12 +42,14 @@ export function Dropdown({
   buttonClassName = "",
   align = "left",
   active = false,
+  tone = "auto",
 }: Props) {
   const [open, setOpen] = useState(false);
   const [flip, setFlip] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const listId = useId();
   const selected = options.find((o) => o.value === value);
+  const dark = tone === "dark";
 
   // Decide open direction from available space so the panel is never clipped
   // below the fold (e.g. the hero search sitting near the viewport bottom).
@@ -83,17 +87,25 @@ export function Dropdown({
         onClick={toggle}
         className={`flex w-full items-center gap-2 outline-none transition-colors ${buttonClassName}`}
       >
-        {icon && <span className="shrink-0 text-gold">{icon}</span>}
+        {icon && <span className={`shrink-0 ${dark ? "text-ember" : "text-gold"}`}>{icon}</span>}
         <span
           className={`truncate ${
-            active ? "text-gold-light" : selected ? "text-cloud" : "text-mist"
+            dark
+              ? selected
+                ? "text-snow"
+                : "text-snow/60"
+              : active
+                ? "text-gold-light"
+                : selected
+                  ? "text-cloud"
+                  : "text-mist"
           }`}
         >
           {selected ? selected.label : placeholder}
         </span>
         <ChevronDown
           size={15}
-          className={`ml-auto shrink-0 text-mist transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+          className={`ml-auto shrink-0 transition-transform duration-300 ${dark ? "text-snow/60" : "text-mist"} ${open ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -106,9 +118,11 @@ export function Dropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: flip ? 6 : -6, scale: 0.98 }}
             transition={{ duration: 0.18, ease: EASE.outExpo }}
-            className={`absolute z-50 max-h-72 min-w-full overflow-auto rounded-xl border border-cloud/12 bg-ink-soft/95 p-1.5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.55)] backdrop-blur-2xl ${
-              flip ? "bottom-full mb-2" : "top-full mt-2"
-            } ${align === "right" ? "right-0" : "left-0"}`}
+            className={`absolute z-50 max-h-72 min-w-full overflow-auto rounded-xl border p-1.5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] backdrop-blur-2xl ${
+              dark ? "border-snow/12 bg-night/90" : "border-cloud/12 bg-ink-soft/95"
+            } ${flip ? "bottom-full mb-2" : "top-full mt-2"} ${
+              align === "right" ? "right-0" : "left-0"
+            }`}
           >
             {options.map((o) => {
               const isSel = o.value === value;
@@ -123,13 +137,19 @@ export function Dropdown({
                       setOpen(false);
                     }}
                     className={`flex w-full items-center justify-between gap-4 rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                      isSel
-                        ? "bg-gold/12 text-gold-light"
-                        : "text-cloud/85 hover:bg-cloud/5 hover:text-cloud"
+                      dark
+                        ? isSel
+                          ? "bg-ember/15 text-ember"
+                          : "text-snow/85 hover:bg-snow/5 hover:text-snow"
+                        : isSel
+                          ? "bg-gold/12 text-gold-light"
+                          : "text-cloud/85 hover:bg-cloud/5 hover:text-cloud"
                     }`}
                   >
                     <span className="truncate">{o.label}</span>
-                    {isSel && <Check size={14} className="shrink-0 text-gold" />}
+                    {isSel && (
+                      <Check size={14} className={`shrink-0 ${dark ? "text-ember" : "text-gold"}`} />
+                    )}
                   </button>
                 </li>
               );

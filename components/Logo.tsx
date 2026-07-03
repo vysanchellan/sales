@@ -86,18 +86,23 @@ export function LogoMark({
   );
 }
 
-/** Nav / footer lockup: static mark + wordmark. */
+/** Nav / footer lockup: static mark + wordmark. `light` forces ivory over a
+ * dark hero regardless of theme. */
 export function Logo({
   className = "",
   markSize = 26,
+  light = false,
 }: {
   className?: string;
   markSize?: number;
+  light?: boolean;
 }) {
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <LogoMark size={markSize} />
-      <span className="font-display text-2xl tracking-[0.02em] text-cloud">
+      <span
+        className={`font-display text-2xl tracking-[0.02em] ${light ? "text-snow" : "text-cloud"}`}
+      >
         VIREL<span className="living-gradient">L</span>E
       </span>
     </span>

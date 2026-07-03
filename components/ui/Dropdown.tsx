@@ -42,9 +42,22 @@ export function Dropdown({
   active = false,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [flip, setFlip] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const listId = useId();
   const selected = options.find((o) => o.value === value);
+
+  // Decide open direction from available space so the panel is never clipped
+  // below the fold (e.g. the hero search sitting near the viewport bottom).
+  const toggle = () => {
+    if (!open && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const below = window.innerHeight - rect.bottom;
+      const estimate = Math.min(288, options.length * 40 + 16);
+      setFlip(below < estimate + 24 && rect.top > below);
+    }
+    setOpen((o) => !o);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -67,7 +80,7 @@ export function Dropdown({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
-        onClick={() => setOpen((o) => !o)}
+        onClick={toggle}
         className={`flex w-full items-center gap-2 outline-none transition-colors ${buttonClassName}`}
       >
         {icon && <span className="shrink-0 text-gold">{icon}</span>}
@@ -89,13 +102,13 @@ export function Dropdown({
           <motion.ul
             id={listId}
             role="listbox"
-            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            initial={{ opacity: 0, y: flip ? 6 : -6, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            exit={{ opacity: 0, y: flip ? 6 : -6, scale: 0.98 }}
             transition={{ duration: 0.18, ease: EASE.outExpo }}
-            className={`absolute top-full z-50 mt-2 max-h-72 min-w-full overflow-auto rounded-xl border border-cloud/12 bg-ink-soft/95 p-1.5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-2xl ${
-              align === "right" ? "right-0" : "left-0"
-            }`}
+            className={`absolute z-50 max-h-72 min-w-full overflow-auto rounded-xl border border-cloud/12 bg-ink-soft/95 p-1.5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.55)] backdrop-blur-2xl ${
+              flip ? "bottom-full mb-2" : "top-full mt-2"
+            } ${align === "right" ? "right-0" : "left-0"}`}
           >
             {options.map((o) => {
               const isSel = o.value === value;

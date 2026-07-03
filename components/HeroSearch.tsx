@@ -43,7 +43,7 @@ export function HeroSearch() {
             type="button"
             onClick={() => setDeal(d)}
             className={`rounded-full px-5 py-1.5 transition-colors ${
-              deal === d ? "bg-gold text-ink" : "text-mist hover:text-cloud"
+              deal === d ? "bg-gold text-onaccent" : "text-mist hover:text-cloud"
             }`}
           >
             {d === "for-sale" ? "Buy" : "Rent"}
@@ -96,7 +96,7 @@ export function HeroSearch() {
         <MagneticButton
           as="button"
           type="submit"
-          className="flex h-[46px] items-center justify-center gap-2 rounded-xl bg-gold px-6 text-sm font-medium text-ink"
+          className="flex h-[46px] items-center justify-center gap-2 rounded-xl bg-gold px-6 text-sm font-medium text-onaccent"
         >
           <Search size={16} /> Search
         </MagneticButton>

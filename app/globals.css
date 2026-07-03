@@ -16,6 +16,9 @@
   --color-indigo: #e57d64;
   --color-indigo-light: #f4a893;
 
+  /* Text that sits on an accent fill — stays dark in both themes */
+  --color-onaccent: #07110d;
+
   --font-display: "Georgia", "Times New Roman", serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif;
@@ -28,8 +31,40 @@
   color-scheme: dark;
 }
 
+/* Light theme — the same tokens, re-valued. Because every utility resolves a
+   CSS variable at runtime, flipping these flips the whole site. Accent-text
+   tokens (gold-light, indigo) darken so they stay legible on light surfaces. */
+html.light {
+  color-scheme: light;
+  --color-ink: #f2efe8;
+  --color-ink-soft: #ffffff;
+  --color-ink-mute: #e7e2d7;
+  --color-cloud: #16211d;
+  --color-mist: #5c675f;
+
+  --color-gold: #17916a;
+  --color-gold-light: #0f7a56;
+  --color-gold-deep: #0c6244;
+  --color-indigo: #cf5b41;
+  --color-indigo-light: #b64c34;
+}
+
 * {
   box-sizing: border-box;
+}
+
+/* Circular theme-switch reveal (View Transitions). The new theme wipes in from
+   the toggle; the old layer holds still beneath it. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
 }
 
 html {

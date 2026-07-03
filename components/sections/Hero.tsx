@@ -26,10 +26,12 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pt-24"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center px-5 pt-24"
     >
-      {/* Cinematic photographic backdrop with a slow Ken-Burns push + parallax */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10">
+      {/* Cinematic photographic backdrop with a slow Ken-Burns push + parallax.
+          overflow-hidden lives here (not on the section) so hero dropdowns can
+          extend beyond the section without being clipped. */}
+      <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10 overflow-hidden">
         <motion.div
           className="absolute inset-0"
           initial={{ scale: 1.15 }}

@@ -76,7 +76,7 @@ export default function AboutPage() {
           <MagneticButton
             as="a"
             href="/agents"
-            className="group flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-ink"
+            className="group flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-onaccent"
           >
             Our advisors
             <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />

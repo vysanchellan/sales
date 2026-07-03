@@ -28,7 +28,7 @@ export function ContactCTA() {
             as="a"
             href="/contact"
             strength={0.5}
-            className="group flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-ink"
+            className="group flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-onaccent"
           >
             Speak with an advisor
             <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />

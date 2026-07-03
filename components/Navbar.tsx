@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-
 import { Menu, X } from "lucide-react";
 import { MagneticButton } from "./animations/MagneticButton";
 import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
 import { EASE } from "@/lib/animations";
 
 const links = [
@@ -41,11 +42,13 @@ export function Navbar() {
       <motion.header
         className="fixed inset-x-0 top-0 z-50 transition-colors duration-500"
         style={{
-          backgroundColor: scrolled ? "rgba(10,10,15,0.72)" : "rgba(10,10,15,0)",
+          backgroundColor: scrolled
+            ? "color-mix(in srgb, var(--color-ink) 72%, transparent)"
+            : "transparent",
           backdropFilter: scrolled ? "blur(14px)" : "blur(0px)",
           borderBottom: scrolled
-            ? "1px solid rgba(201,162,75,0.14)"
-            : "1px solid rgba(201,162,75,0)",
+            ? "1px solid color-mix(in srgb, var(--color-gold) 18%, transparent)"
+            : "1px solid transparent",
         }}
       >
         <nav className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 md:px-10">
@@ -74,15 +77,19 @@ export function Navbar() {
             >
               Enquire
             </MagneticButton>
+            <ThemeToggle />
           </div>
 
-          <button
-            className="text-cloud md:hidden"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu size={26} />
-          </button>
+          <div className="flex items-center gap-3 md:hidden">
+            <ThemeToggle />
+            <button
+              className="text-cloud"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu size={26} />
+            </button>
+          </div>
         </nav>
       </motion.header>
 

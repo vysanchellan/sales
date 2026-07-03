@@ -68,7 +68,7 @@ export function InquiryForm({ propertyTitle, propertySlug, compact = false }: Pr
             exit={{ opacity: 0 }}
             className="flex flex-col items-center gap-3 rounded-2xl border border-gold/25 bg-gold/5 p-8 text-center"
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-ink">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gold text-onaccent">
               <Check size={22} />
             </span>
             <h3 className="font-display text-xl text-cloud">Thank you</h3>
@@ -135,7 +135,7 @@ export function InquiryForm({ propertyTitle, propertySlug, compact = false }: Pr
             <MagneticButton
               as="button"
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-medium text-ink disabled:opacity-70"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-medium text-onaccent disabled:opacity-70"
             >
               {state === "submitting" ? (
                 <>

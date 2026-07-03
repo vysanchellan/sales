@@ -15,7 +15,7 @@ const statusLabel: Record<Property["status"], string> = {
 };
 
 const statusColor: Record<Property["status"], string> = {
-  "for-sale": "bg-gold/90 text-ink",
+  "for-sale": "bg-gold/90 text-onaccent",
   "for-rent": "bg-indigo/90 text-cloud",
   sold: "bg-ink/80 text-mist border border-mist/30",
 };

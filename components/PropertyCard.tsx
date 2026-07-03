@@ -16,8 +16,8 @@ const statusLabel: Record<Property["status"], string> = {
 
 const statusColor: Record<Property["status"], string> = {
   "for-sale": "bg-gold/90 text-onaccent",
-  "for-rent": "bg-indigo/90 text-cloud",
-  sold: "bg-ink/80 text-mist border border-mist/30",
+  "for-rent": "bg-indigo/90 text-onaccent",
+  sold: "bg-night/70 text-snow/85 border border-snow/25 backdrop-blur-sm",
 };
 
 export function PropertyCard({
@@ -50,7 +50,7 @@ export function PropertyCard({
               priority={priority}
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/15 to-transparent" />
 
           <span
             className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide ${statusColor[property.status]}`}
@@ -60,10 +60,10 @@ export function PropertyCard({
 
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
             <div>
-              <p className="flex items-center gap-1 text-xs text-cloud/70">
+              <p className="flex items-center gap-1 text-xs text-snow/75">
                 <MapPin size={12} /> {property.location}, {property.city}
               </p>
-              <h3 className="font-display text-xl text-cloud">{property.title}</h3>
+              <h3 className="font-display text-xl text-snow">{property.title}</h3>
             </div>
           </div>
         </div>

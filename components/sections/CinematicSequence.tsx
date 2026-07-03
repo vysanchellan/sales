@@ -81,10 +81,10 @@ export function CinematicSequence() {
         {cinematicReel.map((r, i) => (
           <div key={i} className="relative h-[70svh] w-full overflow-hidden rounded-lg">
             <Image src={r.image} alt={kickers[i]} fill sizes="100vw" className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/15 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
-              <p className="text-xs uppercase tracking-[0.35em] text-gold-light">{kickers[i]}</p>
-              <p className="mt-2 max-w-md font-display text-2xl text-cloud">{captions[i]}</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-ember">{kickers[i]}</p>
+              <p className="mt-2 max-w-md font-display text-2xl text-snow">{captions[i]}</p>
             </div>
           </div>
         ))}
@@ -101,7 +101,7 @@ export function CinematicSequence() {
             <Image src={r.image} alt={kickers[i]} fill priority={i === 0} sizes="100vw" className="object-cover" />
           </div>
         ))}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/40" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/80 via-night/25 to-night/45" />
 
         <div className="relative z-10 h-full">
           {captions.map((c, i) => (
@@ -111,8 +111,8 @@ export function CinematicSequence() {
               className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-6 text-center"
               style={{ opacity: 0 }}
             >
-              <p className="mb-3 text-xs uppercase tracking-[0.4em] text-gold-light">{kickers[i]}</p>
-              <p className="mx-auto max-w-3xl font-display text-3xl leading-snug text-cloud md:text-6xl">{c}</p>
+              <p className="mb-3 text-xs uppercase tracking-[0.4em] text-ember">{kickers[i]}</p>
+              <p className="mx-auto max-w-3xl font-display text-3xl leading-snug text-snow md:text-6xl">{c}</p>
             </div>
           ))}
         </div>

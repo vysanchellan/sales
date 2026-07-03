@@ -8,10 +8,10 @@ export const EASE = {
 };
 
 export const DURATION = {
-  fast: 0.4,
-  base: 0.7,
-  slow: 1.1,
-  glacial: 1.6,
+  fast: 0.5,
+  base: 0.95,
+  slow: 1.35,
+  glacial: 1.9,
 };
 
 export const SPRING = {

@@ -21,7 +21,7 @@ if (typeof window !== "undefined") {
 const statusColor: Record<Property["status"], string> = {
   "for-sale": "bg-gold/90 text-onaccent",
   "for-rent": "bg-indigo/90 text-onaccent",
-  sold: "bg-ink/80 text-mist border border-mist/30",
+  sold: "bg-night/70 text-snow/85 border border-snow/25 backdrop-blur-sm",
 };
 const statusLabel: Record<Property["status"], string> = {
   "for-sale": "For Sale",
@@ -117,7 +117,7 @@ function FeaturedCard({
             priority={priority}
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-ink/5" />
+        <div className="absolute inset-0 bg-gradient-to-t from-night/90 via-night/30 to-night/5" />
 
         <span
           className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide ${statusColor[property.status]}`}
@@ -127,18 +127,18 @@ function FeaturedCard({
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-5">
           <div>
-            <p className="flex items-center gap-1 text-xs text-cloud/70">
+            <p className="flex items-center gap-1 text-xs text-snow/75">
               <MapPin size={12} /> {property.location}, {property.city}
             </p>
-            <h3 className={`font-display text-cloud ${tall ? "text-3xl md:text-4xl" : "text-xl"}`}>
+            <h3 className={`font-display text-snow ${tall ? "text-3xl md:text-4xl" : "text-xl"}`}>
               {property.title}
             </h3>
           </div>
-          <div className="flex items-center justify-between border-t border-cloud/15 pt-3">
-            <span className="font-display text-lg text-gold-light">
+          <div className="flex items-center justify-between border-t border-snow/20 pt-3">
+            <span className="font-display text-lg text-ember">
               {formatPrice(property.price, property.status)}
             </span>
-            <div className="flex items-center gap-3 text-xs text-cloud/80">
+            <div className="flex items-center gap-3 text-xs text-snow/80">
               {property.type !== "land" && (
                 <>
                   <span className="flex items-center gap-1"><Bed size={14} /> {property.bedrooms}</span>

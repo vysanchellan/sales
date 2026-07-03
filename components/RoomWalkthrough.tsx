@@ -93,12 +93,12 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
               className="relative block h-[70svh] w-full overflow-hidden rounded-lg"
             >
               <Image src={r.image} alt={`${title} — ${r.name}`} fill priority={i === 0} sizes="100vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/15 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-left">
-                <p className="text-xs uppercase tracking-[0.3em] text-gold-light">
+                <p className="text-xs uppercase tracking-[0.3em] text-ember">
                   {String(i + 1).padStart(2, "0")} · {r.name}
                 </p>
-                <p className="mt-2 max-w-md font-display text-2xl text-cloud">{r.caption}</p>
+                <p className="mt-2 max-w-md font-display text-2xl text-snow">{r.caption}</p>
               </div>
             </motion.button>
           ))}
@@ -117,16 +117,16 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
             <Image src={r.image} alt={`${title} — ${r.name}`} fill priority={i === 0} sizes="100vw" className="object-cover" />
           </div>
         ))}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-ink/40" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/85 via-night/15 to-night/40" />
 
         {/* Captions (stacked; GSAP toggles visibility) */}
         <div className="pointer-events-none absolute inset-0">
           {rooms.map((r, i) => (
             <div key={i} data-cap className="absolute bottom-[12%] left-[6%] right-[6%] max-w-2xl">
-              <p className="mb-3 text-xs uppercase tracking-[0.4em] text-gold-light">
+              <p className="mb-3 text-xs uppercase tracking-[0.4em] text-ember">
                 {String(i + 1).padStart(2, "0")} · {r.name}
               </p>
-              <p className="font-display text-4xl leading-[1.1] text-cloud md:text-6xl">{r.caption}</p>
+              <p className="font-display text-4xl leading-[1.1] text-snow md:text-6xl">{r.caption}</p>
             </div>
           ))}
         </div>
@@ -137,14 +137,14 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
             <div key={i} className="flex items-center justify-end gap-3">
               <span
                 className={`text-[11px] uppercase tracking-wider transition-all duration-500 ${
-                  i === active ? "text-gold-light opacity-100" : "text-mist opacity-0"
+                  i === active ? "text-ember opacity-100" : "text-snow opacity-0"
                 }`}
               >
                 {r.name}
               </span>
               <span
                 className={`h-px transition-all duration-500 ${
-                  i === active ? "w-8 bg-gold" : "w-4 bg-mist/40"
+                  i === active ? "w-8 bg-ember" : "w-4 bg-snow/40"
                 }`}
               />
             </div>
@@ -154,14 +154,14 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
         {/* Fullscreen affordance */}
         <button
           onClick={() => setLightbox(active)}
-          className="absolute right-6 top-24 z-10 flex items-center gap-1.5 rounded-full bg-ink/60 px-3 py-1.5 text-xs text-cloud backdrop-blur transition-colors hover:bg-ink/80"
+          className="absolute right-6 top-24 z-10 flex items-center gap-1.5 rounded-full bg-night/60 px-3 py-1.5 text-xs text-snow backdrop-blur transition-colors hover:bg-night/80"
         >
           <Expand size={13} /> View gallery
         </button>
 
         {/* Scroll hint */}
         <motion.div
-          className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 text-mist"
+          className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 text-snow/70"
           initial={{ opacity: 1 }}
           animate={{ opacity: active === 0 ? 1 : 0 }}
           transition={{ duration: 0.4 }}
@@ -197,24 +197,24 @@ function Lightbox({
     <AnimatePresence>
       {index !== null && (
         <motion.div
-          className="fixed inset-0 z-[90] flex items-center justify-center bg-ink/95 backdrop-blur-xl"
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-night/95 backdrop-blur-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => setIndex(null)}
         >
-          <button className="absolute right-5 top-5 text-cloud/70 hover:text-cloud" onClick={() => setIndex(null)} aria-label="Close">
+          <button className="absolute right-5 top-5 text-snow/70 hover:text-snow" onClick={() => setIndex(null)} aria-label="Close">
             <X size={28} />
           </button>
           <button
-            className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-ink/60 text-cloud md:left-8"
+            className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-night/60 text-snow md:left-8"
             onClick={(e) => { e.stopPropagation(); go(-1); }}
             aria-label="Previous"
           >
             <ChevronLeft size={24} />
           </button>
           <button
-            className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-ink/60 text-cloud md:right-8"
+            className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-night/60 text-snow md:right-8"
             onClick={(e) => { e.stopPropagation(); go(1); }}
             aria-label="Next"
           >
@@ -239,9 +239,9 @@ function Lightbox({
               transition={{ duration: 0.35 }}
             >
               <Image src={rooms[index].image} alt={`${title} — ${rooms[index].name}`} fill sizes="90vw" className="object-cover" />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-gold-light">{rooms[index].name}</p>
-                <p className="mt-1 font-display text-xl text-cloud">{rooms[index].caption}</p>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night/85 to-transparent p-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-ember">{rooms[index].name}</p>
+                <p className="mt-1 font-display text-xl text-snow">{rooms[index].caption}</p>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -251,7 +251,7 @@ function Lightbox({
               <button
                 key={i}
                 onClick={(e) => { e.stopPropagation(); setIndex(i); }}
-                className={`h-1.5 rounded-full transition-all ${i === index ? "w-6 bg-gold" : "w-1.5 bg-cloud/40"}`}
+                className={`h-1.5 rounded-full transition-all ${i === index ? "w-6 bg-ember" : "w-1.5 bg-snow/40"}`}
                 aria-label={`Room ${i + 1}`}
               />
             ))}

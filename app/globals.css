@@ -18,8 +18,14 @@
   --color-indigo: #d9a441;
   --color-indigo-light: #ecc98a;
 
-  /* Text that sits on an accent fill — stays dark in both themes */
+  /* Text that sits on an accent fill (flips per theme for contrast) */
   --color-onaccent: #180e07;
+
+  /* Theme-invariant tokens for text/scrims over photography — imagery keeps
+     a dark cinematic treatment in BOTH themes so overlays never wash out */
+  --color-night: #120e0a;
+  --color-snow: #f3ece1;
+  --color-ember: #e7b48c;
 
   --font-display: var(--font-fraunces), "Georgia", "Times New Roman", serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
@@ -51,6 +57,9 @@ html.light {
   --color-gold-deep: #753a18;
   --color-indigo: #9a7420;
   --color-indigo-light: #82611b;
+
+  /* On the deepened light-mode accents, button text must be light to read */
+  --color-onaccent: #fdfaf4;
 }
 
 * {

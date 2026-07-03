@@ -21,10 +21,11 @@ export function Hero() {
     target: ref,
     offset: ["start start", "end start"],
   });
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+  // Fade the hero out gently and late so it doesn't vanish the moment you scroll.
+  const contentOpacity = useTransform(scrollYProgress, [0.55, 0.95], [1, 0]);
 
   return (
     <section
@@ -50,8 +51,8 @@ export function Hero() {
             className="object-cover"
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/45 to-ink" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/55 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-night/60 via-night/45 to-night" />
+        <div className="absolute inset-0 bg-gradient-to-r from-night/60 via-transparent to-transparent" />
       </motion.div>
 
       <motion.div
@@ -66,9 +67,9 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.9, ease: EASE.outExpo }}
-          className="mt-8 flex items-center gap-4 border-t border-cloud/15 pt-4 text-[11px] uppercase tracking-[0.22em] text-mist"
+          className="mt-8 flex items-center gap-4 border-t border-snow/20 pt-4 text-[11px] uppercase tracking-[0.22em] text-snow/65"
         >
-          <span className="text-gold">Virelle</span>
+          <span className="text-ember">Virelle</span>
           <span className="hidden sm:inline">Private brokerage</span>
           <span className="ml-auto">Est. 1998 — London · Zürich · Amalfi</span>
         </motion.div>
@@ -77,7 +78,7 @@ export function Hero() {
           <TextReveal
             as="h1"
             text="Homes that outlast the [[people]] who build them"
-            className="font-display text-5xl leading-[0.98] text-cloud sm:text-6xl md:text-7xl xl:text-8xl"
+            className="font-display text-5xl leading-[0.98] text-snow sm:text-6xl md:text-7xl xl:text-8xl"
             stagger={0.07}
             delay={1.7}
           />
@@ -86,7 +87,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2, duration: 0.9, ease: EASE.outExpo }}
-            className="max-w-sm justify-self-start text-[15px] leading-relaxed text-mist lg:justify-self-end lg:text-right"
+            className="max-w-sm justify-self-start text-[15px] leading-relaxed text-snow/70 lg:justify-self-end lg:text-right"
           >
             A deliberately small portfolio of architecturally significant estates, penthouses and
             land across Europe — represented with discretion.
@@ -109,14 +110,14 @@ export function Hero() {
         className="absolute bottom-10 right-5 hidden flex-col items-center gap-3 md:right-10 lg:flex"
       >
         <span
-          className="text-[10px] uppercase tracking-[0.3em] text-mist"
+          className="text-[10px] uppercase tracking-[0.3em] text-snow/60"
           style={{ writingMode: "vertical-rl" }}
         >
           Scroll
         </span>
-        <div className="relative h-14 w-px overflow-hidden bg-cloud/15">
+        <div className="relative h-14 w-px overflow-hidden bg-snow/20">
           <motion.span
-            className="absolute left-0 top-0 h-5 w-px bg-gold"
+            className="absolute left-0 top-0 h-5 w-px bg-ember"
             animate={{ y: [-20, 56] }}
             transition={{ repeat: Infinity, duration: 1.9, ease: "easeInOut" }}
           />

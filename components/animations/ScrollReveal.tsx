@@ -25,7 +25,7 @@ export function ScrollReveal({
   y = 32,
   className,
   once = true,
-  amount = 0.3,
+  amount = 0.2,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once, amount });

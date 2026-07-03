@@ -58,16 +58,18 @@ export function BrandStory() {
       });
 
       // Each chapter eases in as it enters the viewport, using the horizontal
-      // tween as the container animation (the canonical GSAP pattern).
+      // tween as the container animation. The fade completes while the panel
+      // is still on the right side, so copy is readable the moment it arrives
+      // (a 0.15 start opacity was illegible, especially in light mode).
       panels.forEach((panel) => {
         gsap.from(panel.querySelector("[data-chapter-inner]"), {
-          opacity: 0.15,
-          y: 40,
+          opacity: 0.45,
+          y: 26,
           scrollTrigger: {
             trigger: panel,
             containerAnimation: horizontal,
-            start: "left center",
-            end: "center center",
+            start: "left 95%",
+            end: "left 45%",
             scrub: true,
           },
         });

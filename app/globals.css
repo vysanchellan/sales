@@ -2,22 +2,24 @@
 @plugin "tailwindcss-animate";
 
 @theme {
-  --color-ink: #0a0e0d;
-  --color-ink-soft: #111716;
-  --color-ink-mute: #1a2321;
-  --color-cloud: #eef2ee;
-  --color-mist: #93a49d;
+  /* Warm espresso base */
+  --color-ink: #120e0a;
+  --color-ink-soft: #1a1410;
+  --color-ink-mute: #262019;
+  --color-cloud: #f3ece1;
+  --color-mist: #a3958a;
 
-  /* Primary accent — jade (token kept as "gold" so utility classes cascade) */
-  --color-gold: #3fc196;
-  --color-gold-light: #8ce8c6;
-  --color-gold-deep: #268f6c;
-  /* Secondary accent — warm coral (token kept as "indigo") */
-  --color-indigo: #e57d64;
-  --color-indigo-light: #f4a893;
+  /* Primary accent — burnished terracotta (token kept as "gold" so utility
+     classes cascade) */
+  --color-gold: #c97a4a;
+  --color-gold-light: #e7b48c;
+  --color-gold-deep: #9c5830;
+  /* Secondary accent — honey (token kept as "indigo") */
+  --color-indigo: #d9a441;
+  --color-indigo-light: #ecc98a;
 
   /* Text that sits on an accent fill — stays dark in both themes */
-  --color-onaccent: #07110d;
+  --color-onaccent: #180e07;
 
   --font-display: var(--font-fraunces), "Georgia", "Times New Roman", serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
@@ -36,17 +38,19 @@
    tokens (gold-light, indigo) darken so they stay legible on light surfaces. */
 html.light {
   color-scheme: light;
-  --color-ink: #f2efe8;
-  --color-ink-soft: #ffffff;
-  --color-ink-mute: #e7e2d7;
-  --color-cloud: #16211d;
-  --color-mist: #5c675f;
+  /* Warm paper */
+  --color-ink: #f4efe6;
+  --color-ink-soft: #fdfaf4;
+  --color-ink-mute: #e9e1d2;
+  --color-cloud: #241a12;
+  --color-mist: #71634f;
 
-  --color-gold: #17916a;
-  --color-gold-light: #0f7a56;
-  --color-gold-deep: #0c6244;
-  --color-indigo: #cf5b41;
-  --color-indigo-light: #b64c34;
+  /* Accents deepen for legibility on light surfaces */
+  --color-gold: #a85a2c;
+  --color-gold-light: #8f4a22;
+  --color-gold-deep: #753a18;
+  --color-indigo: #9a7420;
+  --color-indigo-light: #82611b;
 }
 
 * {

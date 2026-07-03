@@ -135,7 +135,7 @@ export function Navbar() {
                 >
                   <Link
                     href={l.href}
-                    className="font-display text-5xl text-cloud/90 hover:text-gold"
+                    className="font-display text-4xl text-cloud/90 hover:text-gold sm:text-5xl"
                   >
                     {l.label}
                   </Link>

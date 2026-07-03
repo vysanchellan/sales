@@ -32,7 +32,7 @@ export function Testimonials() {
           {row.map((t, i) => (
             <figure
               key={`${t.id}-${i}`}
-              className="flex w-[360px] shrink-0 flex-col border-r border-cloud/10 px-8 py-10 md:w-[440px]"
+              className="flex w-[300px] shrink-0 flex-col border-r border-cloud/10 px-6 py-8 sm:w-[360px] sm:px-8 sm:py-10 md:w-[440px]"
             >
               <blockquote className="mb-8 flex-1 font-display text-lg italic leading-snug text-cloud/90 md:text-xl">
                 “{t.quote}”

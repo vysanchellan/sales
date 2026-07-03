@@ -126,7 +126,7 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
               <p className="mb-3 text-xs uppercase tracking-[0.4em] text-ember">
                 {String(i + 1).padStart(2, "0")} · {r.name}
               </p>
-              <p className="font-display text-4xl leading-[1.1] text-snow md:text-6xl">{r.caption}</p>
+              <p className="font-display text-2xl leading-[1.1] text-snow sm:text-4xl md:text-6xl">{r.caption}</p>
             </div>
           ))}
         </div>

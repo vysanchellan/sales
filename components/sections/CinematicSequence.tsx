@@ -112,7 +112,7 @@ export function CinematicSequence() {
               style={{ opacity: 0 }}
             >
               <p className="mb-3 text-xs uppercase tracking-[0.4em] text-ember">{kickers[i]}</p>
-              <p className="mx-auto max-w-3xl font-display text-3xl leading-snug text-snow md:text-6xl">{c}</p>
+              <p className="mx-auto max-w-3xl font-display text-xl leading-snug text-snow sm:text-3xl md:text-6xl">{c}</p>
             </div>
           ))}
         </div>

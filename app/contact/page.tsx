@@ -23,7 +23,7 @@ export default function ContactPage() {
           <TextReveal
             as="h1"
             text="Begin a [[conversation]]"
-            className="font-display text-5xl text-cloud md:text-7xl"
+            className="font-display text-4xl text-cloud sm:text-5xl md:text-7xl"
           />
           <ScrollReveal delay={0.15}>
             <p className="mt-6 max-w-md text-mist">

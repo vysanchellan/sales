@@ -76,7 +76,7 @@ export default async function PropertyPage({
                 {property.location}, {property.city}
               </span>
             </div>
-            <h1 className="mt-3 font-display text-4xl text-cloud md:text-6xl">{property.title}</h1>
+            <h1 className="mt-3 font-display text-3xl text-cloud sm:text-4xl md:text-6xl">{property.title}</h1>
 
             <div className="mt-6 flex flex-wrap gap-8 border-y border-cloud/10 py-6">
               {property.type !== "land" && (

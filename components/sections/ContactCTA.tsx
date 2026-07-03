@@ -19,7 +19,7 @@ export function ContactCTA() {
         <TextReveal
           as="h2"
           text="Begin a [[conversation]]"
-          className="font-display text-5xl leading-[0.98] text-cloud md:text-8xl"
+          className="font-display text-4xl leading-[0.98] text-cloud sm:text-5xl md:text-8xl"
         />
         <div>
           <ScrollReveal delay={0.15}>

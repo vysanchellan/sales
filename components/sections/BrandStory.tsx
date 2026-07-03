@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useCoarsePointer } from "@/lib/hooks/useCoarsePointer";
 import { usePrefersReducedMotion } from "@/lib/hooks/useReducedMotion";
 
 if (typeof window !== "undefined") {
@@ -36,11 +37,13 @@ const chapters = [
 /** Scroll-pinned narrative: the panel pins while chapters advance horizontally. */
 export function BrandStory() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const coarse = useCoarsePointer();
   const reduced = usePrefersReducedMotion();
+  const fallback = coarse || reduced;
 
   useGSAP(
     () => {
-      if (reduced || !rootRef.current) return;
+      if (fallback || !rootRef.current) return;
       const track = rootRef.current.querySelector<HTMLElement>("[data-track]")!;
       const panels = gsap.utils.toArray<HTMLElement>("[data-chapter]");
 
@@ -75,19 +78,19 @@ export function BrandStory() {
         });
       });
     },
-    { scope: rootRef, dependencies: [reduced] }
+    { scope: rootRef, dependencies: [fallback] }
   );
 
-  // Reduced-motion / no-JS friendly fallback: a plain vertical timeline.
-  if (reduced) {
+  if (fallback) {
     return (
-      <section className="mx-auto max-w-3xl px-5 py-24">
-        <div className="space-y-12">
-          {chapters.map((c) => (
-            <div key={c.year} className="border-l border-gold/25 pl-6">
-              <p className="font-display text-2xl text-gold-light">{c.year}</p>
-              <h3 className="mt-1 font-display text-xl text-cloud">{c.title}</h3>
-              <p className="mt-2 text-mist">{c.body}</p>
+      <section className="mx-auto max-w-3xl px-5 py-16 md:py-24">
+        <div className="space-y-10 md:space-y-12">
+          {chapters.map((c, i) => (
+            <div key={c.year} className="border-l-2 border-gold/25 pl-5 md:pl-6">
+              <span className="font-display text-4xl text-gold/25 md:text-5xl">0{i + 1}</span>
+              <p className="mt-2 font-display text-xl text-gold-light md:text-2xl">{c.year}</p>
+              <h3 className="mt-1 font-display text-xl text-cloud md:text-2xl">{c.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-mist md:text-base">{c.body}</p>
             </div>
           ))}
         </div>
@@ -105,10 +108,10 @@ export function BrandStory() {
             className="flex h-full w-screen shrink-0 items-center px-8 md:px-24"
           >
             <div data-chapter-inner className="max-w-xl">
-              <span className="font-display text-7xl text-gold/25 md:text-9xl">0{i + 1}</span>
-              <p className="mt-4 font-display text-3xl text-gold-light">{c.year}</p>
-              <h3 className="mt-2 font-display text-4xl text-cloud md:text-5xl">{c.title}</h3>
-              <p className="mt-5 max-w-md text-lg leading-relaxed text-mist">{c.body}</p>
+              <span className="font-display text-5xl text-gold/25 md:text-7xl lg:text-9xl">0{i + 1}</span>
+              <p className="mt-3 font-display text-2xl text-gold-light md:text-3xl">{c.year}</p>
+              <h3 className="mt-2 font-display text-3xl text-cloud md:text-4xl lg:text-5xl">{c.title}</h3>
+              <p className="mt-4 max-w-md text-base leading-relaxed text-mist md:text-lg">{c.body}</p>
             </div>
           </div>
         ))}

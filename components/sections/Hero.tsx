@@ -78,7 +78,7 @@ export function Hero() {
           <TextReveal
             as="h1"
             text="Homes that outlast the [[people]] who build them"
-            className="font-display text-5xl leading-[0.98] text-snow sm:text-6xl md:text-7xl xl:text-8xl"
+            className="font-display text-[2.5rem] leading-[0.98] text-snow sm:text-5xl md:text-7xl xl:text-8xl"
             stagger={0.07}
             delay={1.7}
           />

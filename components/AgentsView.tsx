@@ -19,7 +19,7 @@ export function AgentsView() {
     <div className="mx-auto max-w-[1400px] px-5 pb-28 pt-32 md:px-10">
       <div className="mb-14 max-w-2xl">
         <p className="mb-2 text-xs uppercase tracking-[0.3em] text-gold/70">The People</p>
-        <h1 className="font-display text-4xl text-cloud md:text-6xl">Advisors</h1>
+        <h1 className="font-display text-3xl text-cloud sm:text-4xl md:text-6xl">Advisors</h1>
         <p className="mt-4 text-mist">
           A small bench of specialists, each with a deep command of their market. Discretion is not a
           policy here — it is the practice.
@@ -84,7 +84,7 @@ function AgentModal({ agent, onClose }: { agent: Agent; onClose: () => void }) {
       onClick={onClose}
     >
       <motion.div
-        className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-lg border border-cloud/10 bg-ink-soft"
+        className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg border border-cloud/10 bg-ink-soft sm:max-h-[85vh]"
         initial={{ opacity: 0, y: 40, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.98 }}

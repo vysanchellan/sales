@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { SlidersHorizontal, X } from "lucide-react";
+import { SlidersHorizontal, X, ChevronDown } from "lucide-react";
 import {
   properties as allProperties,
   cities,
@@ -72,6 +72,7 @@ export function ListingsView() {
   const [filters, setFilters] = useState<Filters>(emptyFilters);
   const [sort, setSort] = useState<Sort>("newest");
   const [page, setPage] = useState(1);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Seed from query params (set by the hero search / agent links).
   useEffect(() => {
@@ -131,14 +132,112 @@ export function ListingsView() {
           <span className="font-display tabular-nums text-gold">(01)</span>
           The Portfolio
         </p>
-        <h1 className="font-display text-4xl leading-[1.02] text-cloud md:text-6xl">
+        <h1 className="font-display text-3xl leading-[1.02] text-cloud sm:text-4xl md:text-6xl">
           {activeAgent ? `Represented by ${activeAgent.name}` : "All listings"}
         </h1>
       </div>
 
       {/* Filter bar */}
-      <div className="sticky top-[72px] z-30 mb-10 rounded-lg border border-cloud/10 bg-ink/70 p-4 backdrop-blur-xl">
-        <div className="flex flex-wrap items-center gap-3">
+      <div className="sticky top-[72px] z-30 mb-10 rounded-lg border border-cloud/10 bg-ink/70 p-3 backdrop-blur-xl md:p-4">
+        {/* Mobile: compact row with toggle */}
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            onClick={() => setFiltersOpen((o) => !o)}
+            className="flex flex-1 items-center gap-2 text-xs uppercase tracking-wider text-mist"
+          >
+            <SlidersHorizontal size={14} />
+            Filters {activeCount > 0 && `(${activeCount})`}
+            <ChevronDown size={14} className={`ml-auto transition-transform ${filtersOpen ? "rotate-180" : ""}`} />
+          </button>
+          <Pill>
+            <Dropdown
+              options={sortOptions}
+              value={sort}
+              onChange={(v) => setSort(v as Sort)}
+              align="right"
+              buttonClassName="text-xs"
+            />
+          </Pill>
+        </div>
+
+        {/* Mobile: expandable filter grid */}
+        <AnimatePresence>
+          {filtersOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden md:hidden"
+            >
+              <div className="grid grid-cols-2 gap-2 pt-3">
+                <Pill>
+                  <Dropdown
+                    options={statusOptions}
+                    value={filters.status}
+                    onChange={(v) => update("status", v)}
+                    placeholder="Any status"
+                    active={!!filters.status}
+                    buttonClassName="text-xs"
+                  />
+                </Pill>
+                <Pill>
+                  <Dropdown
+                    options={cityOptions}
+                    value={filters.city}
+                    onChange={(v) => update("city", v)}
+                    placeholder="Anywhere"
+                    active={!!filters.city}
+                    buttonClassName="text-xs"
+                  />
+                </Pill>
+                <Pill>
+                  <Dropdown
+                    options={typeOptions}
+                    value={filters.type}
+                    onChange={(v) => update("type", v)}
+                    placeholder="Any type"
+                    active={!!filters.type}
+                    buttonClassName="text-xs"
+                  />
+                </Pill>
+                <Pill>
+                  <Dropdown
+                    options={bedOptions}
+                    value={String(filters.minBeds)}
+                    onChange={(v) => update("minBeds", Number(v))}
+                    placeholder="Any beds"
+                    active={filters.minBeds > 0}
+                    buttonClassName="text-xs"
+                  />
+                </Pill>
+                <label className="col-span-2 flex items-center gap-3 rounded-full bg-ink/60 px-4 py-2 text-xs text-mist">
+                  <span className="shrink-0">≤ €{(filters.maxPrice / 1_000_000).toFixed(1)}M</span>
+                  <input
+                    type="range"
+                    min={500_000}
+                    max={MAX}
+                    step={250_000}
+                    value={filters.maxPrice}
+                    onChange={(e) => update("maxPrice", Number(e.target.value))}
+                    className="w-full accent-gold"
+                  />
+                </label>
+                {activeCount > 0 && (
+                  <button
+                    onClick={() => { setFilters(emptyFilters); setPage(1); }}
+                    className="col-span-2 flex items-center justify-center gap-1 rounded-full border border-gold/30 px-3 py-2 text-xs text-gold-light hover:bg-gold/10"
+                  >
+                    <X size={12} /> Clear all ({activeCount})
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Desktop: inline row */}
+        <div className="hidden flex-wrap items-center gap-3 md:flex">
           <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-mist">
             <SlidersHorizontal size={14} /> Filter
           </span>

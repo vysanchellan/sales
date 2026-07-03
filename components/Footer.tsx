@@ -12,7 +12,7 @@ export function Footer() {
 
   return (
     <footer className="relative border-t border-gold/10 bg-ink-soft/60">
-      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] md:px-10 md:py-24">
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-12 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] md:gap-12 md:px-10 md:py-24">
         <div>
           <Logo markSize={30} />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist">

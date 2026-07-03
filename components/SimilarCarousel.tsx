@@ -42,7 +42,7 @@ export function SimilarCarousel({ items }: { items: Property[] }) {
           whileTap={{ cursor: "grabbing" }}
         >
           {items.map((p) => (
-            <div key={p.id} className="w-[300px] shrink-0 md:w-[360px]">
+            <div key={p.id} className="w-[260px] shrink-0 sm:w-[300px] md:w-[360px]">
               <PropertyCard property={p} />
             </div>
           ))}

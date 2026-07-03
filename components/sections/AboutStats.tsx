@@ -36,7 +36,7 @@ export function AboutStats() {
           <TextReveal
             as="h2"
             text="We don't sell houses. We place people in the [[right]] one."
-            className="font-display text-4xl leading-[1.06] text-cloud md:text-5xl"
+            className="font-display text-3xl leading-[1.06] text-cloud sm:text-4xl md:text-5xl"
           />
           <ScrollReveal delay={0.15}>
             <p className="mt-6 max-w-md leading-relaxed text-mist">
@@ -52,12 +52,12 @@ export function AboutStats() {
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className={`border-t border-cloud/10 px-1 py-8 ${i % 2 === 0 ? "pr-8" : "pl-8"}`}
+              className={`border-t border-cloud/10 px-1 py-5 md:py-8 ${i % 2 === 0 ? "pr-4 md:pr-8" : "pl-4 md:pl-8"}`}
             >
-              <p className="font-display text-4xl text-cloud md:text-6xl">
+              <p className="font-display text-3xl text-cloud sm:text-4xl md:text-6xl">
                 <CountUp value={s.value} suffix={s.suffix} />
               </p>
-              <p className="mt-2 text-xs uppercase tracking-[0.16em] text-mist">{s.label}</p>
+              <p className="mt-1.5 text-[10px] uppercase tracking-[0.16em] text-mist sm:mt-2 sm:text-xs">{s.label}</p>
             </div>
           ))}
         </motion.div>

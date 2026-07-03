@@ -39,7 +39,7 @@ export function SectionHeader({ index, label, title, link }: Props) {
       <TextReveal
         as="h2"
         text={title}
-        className="max-w-3xl font-display text-4xl leading-[1.04] text-cloud md:text-6xl"
+        className="max-w-3xl font-display text-3xl leading-[1.04] text-cloud sm:text-4xl md:text-6xl"
       />
     </header>
   );

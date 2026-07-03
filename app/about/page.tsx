@@ -34,7 +34,7 @@ export default function AboutPage() {
         <TextReveal
           as="h1"
           text="Nearly three decades placing people in the [[right]] home"
-          className="font-display text-4xl leading-[1.08] text-cloud md:text-6xl"
+          className="font-display text-3xl leading-[1.08] text-cloud sm:text-4xl md:text-6xl"
         />
         <ScrollReveal delay={0.2}>
           <p className="mx-auto mt-6 max-w-xl text-mist">
@@ -70,7 +70,7 @@ export default function AboutPage() {
         <TextReveal
           as="h2"
           text="Meet the people behind the [[portfolio]]"
-          className="font-display text-4xl text-cloud md:text-5xl"
+          className="font-display text-3xl text-cloud sm:text-4xl md:text-5xl"
         />
         <ScrollReveal delay={0.2} className="mt-8 flex justify-center">
           <MagneticButton

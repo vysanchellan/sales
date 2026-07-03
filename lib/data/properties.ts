@@ -32,7 +32,7 @@ const base: Base[] = [
       room("The Salon", "Frescoed ceilings meet quiet contemporary restraint.", "1600607687939-ce8a6c25118c"),
       room("The Kitchen", "A working kitchen built around a marble island.", "1600047509807-ba8f99d2cdde"),
       room("Primary Suite", "The bed faces the water; the water is the only art.", "1600585152915-d208bec867a1"),
-      room("The View", "Terraced citrus descends toward the Tyrrhenian horizon.", "1508214751196-bcfd4ca60f91"),
+      room("The View", "At first light the whole coast opens below.", "1493246507139-91e8fad9978e"),
     ],
     description:
       "Suspended between sky and sea, Villa Serena is a restored 18th-century estate commanding an uninterrupted view of the Tyrrhenian coastline. Terraced gardens of lemon and olive descend toward a heated infinity pool, while the interiors balance frescoed ceilings with quiet contemporary restraint.",
@@ -101,7 +101,7 @@ const base: Base[] = [
     rooms: [
       room("Arrival", "A cantilevered form floats over the hillside.", "1600585154340-be6161a56a0c"),
       room("The Great Room", "Structural glass dissolves the alpine horizon indoors.", "1600607687920-4e2a09cf159d"),
-      room("The Kitchen", "Radiant stone beneath a suspended steel stair.", "1556909114-f6e7ad7d3136"),
+      room("The Kitchen", "A pale, precise kitchen open to the living space.", "1484154218962-a197022b5858"),
       room("Primary Suite", "Wake to the lake and the mountains beyond.", "1600566752355-35792bedcfea"),
       room("The View", "Lake Zürich, kept for you alone.", "1439066615861-d1af74d74000"),
     ],
@@ -241,7 +241,7 @@ const base: Base[] = [
     sqm: 180,
     type: "apartment",
     rooms: [
-      room("The Building", "A converted warehouse on the canal.", "1416331108676-a22ccb276e35"),
+      room("The Building", "Camden rooftops and canals, from above.", "1531572753322-ad063cecc140"),
       room("The Loft", "Double-height ceilings and exposed steelwork.", "1616486338812-3dadae4b4ace"),
       room("The Kitchen", "Warm timber softens the industrial bones.", "1616594039964-ae9021a400a0"),
       room("The Mezzanine", "A studio floats above the living space.", "1600585153490-76fb20a32601"),
@@ -349,7 +349,7 @@ const base: Base[] = [
       room("The Terraces", "Sculpted white terraces cascade to the sea.", "1489424731084-a5d8b219a5bb"),
       room("The Living Room", "Light, air, and an endless blue.", "1502005229762-cf1b2da7c5d6"),
       room("A Bedroom", "Simple rooms that defer to the view.", "1554995207-c18c203602cb"),
-      room("The Sea Pool", "A sea-water pool cut into the rock.", "1600880292203-757bb62b4baf"),
+      room("The Sea Pool", "A mirror-still pool against the horizon.", "1512917774080-9991f1c4c750"),
     ],
     description:
       "An iconic modernist villa clinging to the Faraglioni cliffs, sold in a private off-market transaction. Sculpted white terraces cascade toward a sea-water pool cut into the rock.",

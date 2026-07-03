@@ -1,7 +1,8 @@
 import type { Property, PropertyType, PropertyStatus, Room } from "./types";
 
 // Real photography from Unsplash, sized/cropped on the fly via URL params so
-// nothing heavy lives in the repo. `u()` builds a wide cinematic frame.
+// nothing heavy lives in the repo. Every image below is unique — no photo is
+// reused across two properties, so each listing is its own distinct walkthrough.
 const u = (id: string, w = 1800) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
@@ -11,8 +12,6 @@ const room = (name: string, caption: string, id: string): Room => ({
   image: u(id),
 });
 
-// Base records carry the ordered `rooms` (the room-by-room walkthrough); the
-// flat `images` array is derived from them for cards, galleries and OG.
 type Base = Omit<Property, "images"> & { rooms: Room[] };
 
 const base: Base[] = [
@@ -28,7 +27,6 @@ const base: Base[] = [
     bathrooms: 7,
     sqm: 720,
     type: "estate",
-    heroVideo: undefined,
     rooms: [
       room("Arrival", "A gated drive opens onto terraces suspended above the sea.", "1613490493576-7fde63acd811"),
       room("The Salon", "Frescoed ceilings meet quiet contemporary restraint.", "1600607687939-ce8a6c25118c"),
@@ -100,11 +98,10 @@ const base: Base[] = [
     bathrooms: 6,
     sqm: 560,
     type: "house",
-    heroVideo: undefined,
     rooms: [
       room("Arrival", "A cantilevered form floats over the hillside.", "1600585154340-be6161a56a0c"),
       room("The Great Room", "Structural glass dissolves the alpine horizon indoors.", "1600607687920-4e2a09cf159d"),
-      room("The Kitchen", "Radiant stone and a suspended steel stair.", "1556909114-f6e7ad7d3136"),
+      room("The Kitchen", "Radiant stone beneath a suspended steel stair.", "1556909114-f6e7ad7d3136"),
       room("Primary Suite", "Wake to the lake and the mountains beyond.", "1600566752355-35792bedcfea"),
       room("The View", "Lake Zürich, kept for you alone.", "1439066615861-d1af74d74000"),
     ],
@@ -140,7 +137,7 @@ const base: Base[] = [
     rooms: [
       room("The Bastide", "A honey-stone bastide anchors forty hectares.", "1583608205776-bfd35f0d9f83"),
       room("The Salon", "Beamed ceilings and light the colour of the valley.", "1493809842364-78817add7ffb"),
-      room("The Kitchen", "A farmhouse kitchen made for long lunches.", "1600047509807-ba8f99d2cdde"),
+      room("The Cellar", "A vaulted cellar for the estate's own vintage.", "1586023492125-27b2c045efd7"),
       room("A Bedroom", "Shuttered calm above the vines.", "1600210491369-e753d80a41f3"),
       room("The Vineyard", "Grenache and Syrah run to the tree line.", "1500382017468-9049fed747ef"),
     ],
@@ -176,7 +173,7 @@ const base: Base[] = [
     rooms: [
       room("The Cliffside", "A whitewashed villa beside the old lighthouse.", "1580587771525-78b9dba3b914"),
       room("Vaulted Living", "Cool vaulted rooms open to the water.", "1600566753086-00f18fb6b3ea"),
-      room("The Kitchen", "An outdoor kitchen under the pergola.", "1556909114-f6e7ad7d3136"),
+      room("The Loggia", "An outdoor room shaded from the noon sun.", "1600607688969-a5bfcd646154"),
       room("A Bedroom", "Linen, lime plaster, and sea air.", "1616046229478-9901c5536a45"),
       room("The Terrace", "Steps in the rock lead to a swimming platform.", "1507525428034-b723cf961d3e"),
     ],
@@ -210,9 +207,9 @@ const base: Base[] = [
     type: "house",
     rooms: [
       room("Arrival", "A serene lakefront home behind a quiet gate.", "1568605114967-8130f3a36994"),
-      room("The Living Room", "Wide oak floors and a wood-burning core.", "1600607688969-a5bfcd646154"),
-      room("The Kitchen", "A kitchen built for gathering.", "1600047509358-9dc75507daeb"),
-      room("Primary Suite", "The garden runs to the water's edge.", "1600585152915-d208bec867a1"),
+      room("The Living Room", "Wide oak floors and a wood-burning core.", "1502672260266-1c1ef2d93688"),
+      room("The Kitchen", "A kitchen built for gathering.", "1560448204-e02f11c3d0e2"),
+      room("Primary Suite", "The garden runs to the water's edge.", "1600121848594-d8644e57abab"),
       room("The Jetty", "A private jetty and boathouse on the lake.", "1470071459604-3b5ec3a7fe05"),
     ],
     description:
@@ -244,11 +241,11 @@ const base: Base[] = [
     sqm: 180,
     type: "apartment",
     rooms: [
-      room("The Building", "A converted warehouse on the canal.", "1560185007-cde436f6a4d0"),
+      room("The Building", "A converted warehouse on the canal.", "1416331108676-a22ccb276e35"),
       room("The Loft", "Double-height ceilings and exposed steelwork.", "1616486338812-3dadae4b4ace"),
-      room("The Kitchen", "Warm timber softens the industrial bones.", "1600047509358-9dc75507daeb"),
-      room("The Mezzanine", "A studio floats above the living space.", "1616046229478-9901c5536a45"),
-      room("The Outlook", "A wall of restored Crittall over the water.", "1416331108676-a22ccb276e35"),
+      room("The Kitchen", "Warm timber softens the industrial bones.", "1616594039964-ae9021a400a0"),
+      room("The Mezzanine", "A studio floats above the living space.", "1600585153490-76fb20a32601"),
+      room("The Outlook", "A wall of restored Crittall over the water.", "1501183638710-841dd1904471"),
     ],
     description:
       "A converted warehouse loft with double-height ceilings, exposed steelwork, and a mezzanine studio. Industrial bones softened by warm timber and a wall of restored Crittall glazing overlooking the canal.",
@@ -279,10 +276,11 @@ const base: Base[] = [
     sqm: 62000,
     type: "land",
     rooms: [
-      room("The Ridge", "Six hectares of elevated, building-ready land.", "1500382017468-9049fed747ef"),
+      room("The Ridge", "Six hectares of elevated, building-ready land.", "1523712999610-f77fbcfc3843"),
       room("The Panorama", "Uninterrupted views toward the Monts de Vaucluse.", "1466692476868-aef1dfb1e735"),
       room("Olive Terraces", "Mature terraces run down the south-facing slope.", "1518495973542-4542c06a5843"),
-      room("The Plot", "Planning consent secured for a single residence.", "1449844908441-8829872d2607"),
+      room("The Valley", "A green valley falls away below the plot.", "1441974231531-c6227db76b6e"),
+      room("The Building Plot", "Planning consent secured for a single residence.", "1449844908441-8829872d2607"),
     ],
     description:
       "Six hectares of elevated, building-ready land with panoramic views toward the Monts de Vaucluse. Mature olive terraces, an existing well, and full planning consent for a single private residence of up to 400 m².",
@@ -313,10 +311,10 @@ const base: Base[] = [
     type: "house",
     rooms: [
       room("The Façade", "White stucco on a private garden square.", "1600585154526-990dced4db0d"),
-      room("The Drawing Room", "Original cornicing, restored to the year.", "1616594039964-ae9021a400a0"),
-      room("The Kitchen", "A garden-level kitchen and breakfast room.", "1556909114-f6e7ad7d3136"),
-      room("Primary Suite", "Six storeys served by a passenger lift.", "1600566752355-35792bedcfea"),
-      room("The Spa", "A subterranean pool and spa below.", "1615529182904-14819c35db37"),
+      room("The Drawing Room", "Original cornicing, restored to the year.", "1616137466211-f939a420be84"),
+      room("The Dining Room", "A garden-level room for long dinners.", "1615529182904-14819c35db37"),
+      room("Primary Suite", "Six storeys served by a passenger lift.", "1618221195710-dd6b41faaea6"),
+      room("The Spa", "A subterranean pool and spa below.", "1524758631624-e2822e304c36"),
     ],
     description:
       "A white-stucco Georgian townhouse on a garden square, restored over three years to a standard rarely seen. Six storeys served by a lift, a subterranean pool and spa, and a private mews house to the rear.",
@@ -348,10 +346,10 @@ const base: Base[] = [
     type: "estate",
     rooms: [
       room("The Cliff", "A modernist villa on the Faraglioni cliffs.", "1600596542815-ffad4c1539a9"),
-      room("The Terraces", "Sculpted white terraces cascade to the sea.", "1600585153490-76fb20a32601"),
-      room("The Living Room", "Light, air, and an endless blue.", "1502672260266-1c1ef2d93688"),
-      room("A Bedroom", "Simple rooms that defer to the view.", "1600210492486-724fe5c67fb0"),
-      room("The Sea Pool", "A sea-water pool cut into the rock.", "1507525428034-b723cf961d3e"),
+      room("The Terraces", "Sculpted white terraces cascade to the sea.", "1489424731084-a5d8b219a5bb"),
+      room("The Living Room", "Light, air, and an endless blue.", "1502005229762-cf1b2da7c5d6"),
+      room("A Bedroom", "Simple rooms that defer to the view.", "1554995207-c18c203602cb"),
+      room("The Sea Pool", "A sea-water pool cut into the rock.", "1600880292203-757bb62b4baf"),
     ],
     description:
       "An iconic modernist villa clinging to the Faraglioni cliffs, sold in a private off-market transaction. Sculpted white terraces cascade toward a sea-water pool cut into the rock.",

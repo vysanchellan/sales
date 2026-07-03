@@ -11,14 +11,43 @@ import {
   formatPrice,
 } from "@/lib/data/properties";
 import { getAgent } from "@/lib/data/agents";
-import type { PropertyStatus, PropertyType } from "@/lib/data/types";
 import { PropertyCard } from "@/components/PropertyCard";
 import { MagneticButton } from "@/components/animations/MagneticButton";
+import { Dropdown } from "@/components/ui/Dropdown";
 
 type Sort = "newest" | "price-asc" | "price-desc" | "beds";
 
 const PAGE_SIZE = 6;
 const MAX = 25_000_000;
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const statusOptions = [
+  { value: "", label: "Any status" },
+  { value: "for-sale", label: "For sale" },
+  { value: "for-rent", label: "For rent" },
+  { value: "sold", label: "Sold" },
+];
+const cityOptions = [{ value: "", label: "Anywhere" }, ...cities.map((c) => ({ value: c, label: c }))];
+const typeOptions = [{ value: "", label: "Any type" }, ...propertyTypes.map((t) => ({ value: t, label: cap(t) }))];
+const bedOptions = [
+  { value: "0", label: "Any beds" },
+  ...[1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: `${n}+ beds` })),
+];
+const sortOptions = [
+  { value: "newest", label: "Newest" },
+  { value: "price-asc", label: "Price · low to high" },
+  { value: "price-desc", label: "Price · high to low" },
+  { value: "beds", label: "Most bedrooms" },
+];
+
+/** Rounded pill wrapper that hosts a filter Dropdown in the sticky filter bar. */
+function Pill({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="rounded-full bg-ink/60 px-4 py-2 text-cloud transition-colors">
+      {children}
+    </div>
+  );
+}
 
 interface Filters {
   city: string;
@@ -111,35 +140,49 @@ export function ListingsView() {
             <SlidersHorizontal size={14} /> Filter
           </span>
 
-          <Select value={filters.status} onChange={(v) => update("status", v)} label="Any status">
-            {(["for-sale", "for-rent", "sold"] as PropertyStatus[]).map((s) => (
-              <option key={s} value={s} className="bg-ink">
-                {s === "for-sale" ? "For sale" : s === "for-rent" ? "For rent" : "Sold"}
-              </option>
-            ))}
-          </Select>
+          <Pill>
+            <Dropdown
+              options={statusOptions}
+              value={filters.status}
+              onChange={(v) => update("status", v)}
+              placeholder="Any status"
+              active={!!filters.status}
+              buttonClassName="text-xs"
+            />
+          </Pill>
 
-          <Select value={filters.city} onChange={(v) => update("city", v)} label="Anywhere">
-            {cities.map((c) => (
-              <option key={c} value={c} className="bg-ink">{c}</option>
-            ))}
-          </Select>
+          <Pill>
+            <Dropdown
+              options={cityOptions}
+              value={filters.city}
+              onChange={(v) => update("city", v)}
+              placeholder="Anywhere"
+              active={!!filters.city}
+              buttonClassName="text-xs"
+            />
+          </Pill>
 
-          <Select value={filters.type} onChange={(v) => update("type", v)} label="Any type">
-            {propertyTypes.map((t) => (
-              <option key={t} value={t} className="bg-ink capitalize">{t}</option>
-            ))}
-          </Select>
+          <Pill>
+            <Dropdown
+              options={typeOptions}
+              value={filters.type}
+              onChange={(v) => update("type", v)}
+              placeholder="Any type"
+              active={!!filters.type}
+              buttonClassName="text-xs"
+            />
+          </Pill>
 
-          <Select
-            value={String(filters.minBeds)}
-            onChange={(v) => update("minBeds", Number(v))}
-            label="Any beds"
-          >
-            {[1, 2, 3, 4, 5].map((n) => (
-              <option key={n} value={n} className="bg-ink">{n}+ beds</option>
-            ))}
-          </Select>
+          <Pill>
+            <Dropdown
+              options={bedOptions}
+              value={String(filters.minBeds)}
+              onChange={(v) => update("minBeds", Number(v))}
+              placeholder="Any beds"
+              active={filters.minBeds > 0}
+              buttonClassName="text-xs"
+            />
+          </Pill>
 
           <label className="flex items-center gap-3 rounded-full bg-ink/60 px-4 py-2 text-xs text-mist">
             <span>≤ €{(filters.maxPrice / 1_000_000).toFixed(1)}M</span>
@@ -155,16 +198,15 @@ export function ListingsView() {
           </label>
 
           <div className="ml-auto flex items-center gap-3">
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value as Sort)}
-              className="rounded-full bg-ink/60 px-4 py-2 text-xs text-cloud outline-none"
-            >
-              <option value="newest" className="bg-ink">Newest</option>
-              <option value="price-asc" className="bg-ink">Price · low to high</option>
-              <option value="price-desc" className="bg-ink">Price · high to low</option>
-              <option value="beds" className="bg-ink">Most bedrooms</option>
-            </select>
+            <Pill>
+              <Dropdown
+                options={sortOptions}
+                value={sort}
+                onChange={(v) => setSort(v as Sort)}
+                align="right"
+                buttonClassName="text-xs"
+              />
+            </Pill>
             {activeCount > 0 && (
               <button
                 onClick={() => {
@@ -219,31 +261,6 @@ export function ListingsView() {
         </>
       )}
     </div>
-  );
-}
-
-function Select({
-  value,
-  onChange,
-  label,
-  children,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className={`rounded-full px-4 py-2 text-xs outline-none ${
-        value ? "bg-gold/15 text-gold-light" : "bg-ink/60 text-mist"
-      }`}
-    >
-      <option value="" className="bg-ink">{label}</option>
-      {children}
-    </select>
   );
 }
 

@@ -2,11 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, MapPin, Home, ChevronDown } from "lucide-react";
+import { Search, MapPin, Home } from "lucide-react";
 import { cities, propertyTypes } from "@/lib/data/properties";
 import { MagneticButton } from "./animations/MagneticButton";
+import { Dropdown } from "./ui/Dropdown";
 
 const MAX_PRICE = 25_000_000;
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const locationOptions = [{ value: "", label: "Anywhere" }, ...cities.map((c) => ({ value: c, label: c }))];
+const typeOptions = [{ value: "", label: "Any type" }, ...propertyTypes.map((t) => ({ value: t, label: cap(t) }))];
 
 /** Hero search overlay. Purely client-side — composes query params and routes. */
 export function HeroSearch() {
@@ -47,39 +52,29 @@ export function HeroSearch() {
       </div>
 
       <div className="grid gap-3 md:grid-cols-[1.2fr_1fr_1.3fr_auto] md:items-end">
-        <label className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1">
           <span className="px-1 text-[11px] uppercase tracking-wider text-mist/70">Location</span>
-          <div className="flex items-center gap-2 rounded-xl bg-ink/60 px-3 py-2.5">
-            <MapPin size={16} className="text-gold" />
-            <select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="w-full appearance-none bg-transparent text-sm text-cloud outline-none"
-            >
-              <option value="">Anywhere</option>
-              {cities.map((c) => (
-                <option key={c} value={c} className="bg-ink">{c}</option>
-              ))}
-            </select>
-          </div>
-        </label>
+          <Dropdown
+            options={locationOptions}
+            value={location}
+            onChange={setLocation}
+            icon={<MapPin size={16} />}
+            placeholder="Anywhere"
+            buttonClassName="rounded-xl bg-ink/60 px-3 py-2.5 text-sm hover:bg-ink/80"
+          />
+        </div>
 
-        <label className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1">
           <span className="px-1 text-[11px] uppercase tracking-wider text-mist/70">Type</span>
-          <div className="flex items-center gap-2 rounded-xl bg-ink/60 px-3 py-2.5">
-            <Home size={16} className="text-gold" />
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="w-full appearance-none bg-transparent text-sm capitalize text-cloud outline-none"
-            >
-              <option value="">Any</option>
-              {propertyTypes.map((t) => (
-                <option key={t} value={t} className="bg-ink capitalize">{t}</option>
-              ))}
-            </select>
-          </div>
-        </label>
+          <Dropdown
+            options={typeOptions}
+            value={type}
+            onChange={setType}
+            icon={<Home size={16} />}
+            placeholder="Any type"
+            buttonClassName="rounded-xl bg-ink/60 px-3 py-2.5 text-sm hover:bg-ink/80"
+          />
+        </div>
 
         <label className="flex flex-col gap-1">
           <span className="px-1 text-[11px] uppercase tracking-wider text-mist/70">

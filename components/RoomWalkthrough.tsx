@@ -9,6 +9,7 @@ import { useGSAP } from "@gsap/react";
 import { X, ChevronLeft, ChevronRight, Expand, ChevronDown } from "lucide-react";
 import type { Room } from "@/lib/data/types";
 import { useCoarsePointer } from "@/lib/hooks/useCoarsePointer";
+import { useHydrated } from "@/lib/hooks/useHydrated";
 import { usePrefersReducedMotion } from "@/lib/hooks/useReducedMotion";
 
 if (typeof window !== "undefined") {
@@ -24,6 +25,7 @@ if (typeof window !== "undefined") {
 export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string }) {
   const coarse = useCoarsePointer();
   const reduced = usePrefersReducedMotion();
+  const hydrated = useHydrated();
   const scrub = !coarse && !reduced;
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -32,7 +34,8 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
 
   useGSAP(
     () => {
-      if (!scrub || !rootRef.current) return;
+      // Never pin before hydration settles — see useHydrated.
+      if (!hydrated || !scrub || !rootRef.current) return;
       const stage = rootRef.current.querySelector<HTMLElement>("[data-stage]")!;
       const layers = gsap.utils.toArray<HTMLElement>("[data-layer]");
       const caps = gsap.utils.toArray<HTMLElement>("[data-cap]");
@@ -74,7 +77,7 @@ export function RoomWalkthrough({ rooms, title }: { rooms: Room[]; title: string
         }
       });
     },
-    { scope: rootRef, dependencies: [scrub, rooms.length] }
+    { scope: rootRef, dependencies: [hydrated, scrub, rooms.length] }
   );
 
   // ---- Touch / reduced-motion fallback: stacked cinematic sections ----------

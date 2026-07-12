@@ -22,6 +22,14 @@ export function TiltCard({ children, className = "", max = 8, glare = true }: Pr
   const ry = useSpring(useTransform(px, [0, 1], [-max, max]), SPRING.tilt);
   const glareX = useTransform(px, [0, 1], ["0%", "100%"]);
   const glareY = useTransform(py, [0, 1], ["0%", "100%"]);
+  // Must be created unconditionally — a hook below the coarse early-return
+  // changes the hook count when `coarse` flips after mount and crashes React
+  // (error #300) on every touch device.
+  const glareBg = useTransform(
+    [glareX, glareY],
+    ([gx, gy]) =>
+      `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.28), transparent 55%)`
+  );
 
   const onMove = (e: React.MouseEvent) => {
     if (coarse || !ref.current) return;
@@ -49,13 +57,7 @@ export function TiltCard({ children, className = "", max = 8, glare = true }: Pr
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-[inherit] mix-blend-overlay"
-          style={{
-            background: useTransform(
-              [glareX, glareY],
-              ([gx, gy]) =>
-                `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.28), transparent 55%)`
-            ),
-          }}
+          style={{ background: glareBg }}
         />
       )}
     </motion.div>

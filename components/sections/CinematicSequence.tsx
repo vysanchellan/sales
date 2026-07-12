@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { cinematicReel } from "@/lib/data/properties";
 import { useCoarsePointer } from "@/lib/hooks/useCoarsePointer";
+import { useHydrated } from "@/lib/hooks/useHydrated";
 import { usePrefersReducedMotion } from "@/lib/hooks/useReducedMotion";
 
 if (typeof window !== "undefined") {
@@ -29,12 +30,14 @@ const captions = [
 export function CinematicSequence() {
   const coarse = useCoarsePointer();
   const reduced = usePrefersReducedMotion();
+  const hydrated = useHydrated();
   const scrub = !coarse && !reduced;
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (!scrub || !containerRef.current) return;
+      // Never pin before hydration settles — see useHydrated.
+      if (!hydrated || !scrub || !containerRef.current) return;
       const stage = containerRef.current.querySelector<HTMLElement>("[data-stage]")!;
       const layers = gsap.utils.toArray<HTMLElement>("[data-scene]");
       const caps = gsap.utils.toArray<HTMLElement>("[data-caption]");
@@ -71,7 +74,7 @@ export function CinematicSequence() {
         }
       });
     },
-    { scope: containerRef, dependencies: [scrub] }
+    { scope: containerRef, dependencies: [hydrated, scrub] }
   );
 
   // ---- Touch / reduced-motion fallback --------------------------------------

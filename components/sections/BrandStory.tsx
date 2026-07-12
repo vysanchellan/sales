@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useCoarsePointer } from "@/lib/hooks/useCoarsePointer";
+import { useHydrated } from "@/lib/hooks/useHydrated";
 import { usePrefersReducedMotion } from "@/lib/hooks/useReducedMotion";
 
 if (typeof window !== "undefined") {
@@ -39,11 +40,13 @@ export function BrandStory() {
   const rootRef = useRef<HTMLDivElement>(null);
   const coarse = useCoarsePointer();
   const reduced = usePrefersReducedMotion();
+  const hydrated = useHydrated();
   const fallback = coarse || reduced;
 
   useGSAP(
     () => {
-      if (fallback || !rootRef.current) return;
+      // Never pin before hydration settles — see useHydrated.
+      if (!hydrated || fallback || !rootRef.current) return;
       const track = rootRef.current.querySelector<HTMLElement>("[data-track]")!;
       const panels = gsap.utils.toArray<HTMLElement>("[data-chapter]");
 
@@ -78,7 +81,7 @@ export function BrandStory() {
         });
       });
     },
-    { scope: rootRef, dependencies: [fallback] }
+    { scope: rootRef, dependencies: [hydrated, fallback] }
   );
 
   if (fallback) {

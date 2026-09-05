@@ -2,20 +2,28 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Sun, Moon } from "lucide-react";
-import { SPRING } from "@/lib/animations";
 
-/**
- * Theme toggle with a circular View-Transitions reveal: the incoming theme
- * wipes in from the toggle itself. Falls back to an instant swap where the API
- * or reduced-motion says no. The knob carries the active mode's icon.
- */
+/* ===========================================================================
+   The toggle is a material swatch.
+
+   On a drawing, a cut solid is shown poché — filled. A void is left open. This
+   control is that swatch: a hairline square with exactly half of it filled,
+   split on the diagonal. Switching theme sweeps the diagonal through 180°, so
+   the fill crosses the square rather than blinking between two icons.
+
+   The page itself changes with a circular wipe originating at this square, via
+   the View Transitions API — so the new surface is drawn out from the tool
+   that asked for it, not cross-faded underneath you.
+   =========================================================================== */
+
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLButtonElement>(null);
   const [isLight, setIsLight] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setIsLight(document.documentElement.classList.contains("light"));
+    setReady(true);
   }, []);
 
   const toggle = () => {
@@ -33,7 +41,6 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // View Transitions API is not yet in the DOM lib types.
     const doc = document as Document & {
       startViewTransition?: (cb: () => void) => { ready: Promise<void> };
     };
@@ -43,16 +50,15 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       return;
     }
 
-    const rect = btn.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
+    const r = btn.getBoundingClientRect();
+    const x = r.left + r.width / 2;
+    const y = r.top + r.height / 2;
     const end = Math.hypot(
       Math.max(x, window.innerWidth - x),
       Math.max(y, window.innerHeight - y)
     );
 
-    const vt = doc.startViewTransition(apply);
-    vt.ready.then(() => {
+    doc.startViewTransition(apply).ready.then(() => {
       document.documentElement.animate(
         {
           clipPath: [
@@ -62,7 +68,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
         },
         {
           duration: 620,
-          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
           pseudoElement: "::view-transition-new(root)",
         }
       );
@@ -73,20 +79,38 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     <button
       ref={ref}
       onClick={toggle}
+      aria-pressed={isLight}
       aria-label={isLight ? "Switch to dark theme" : "Switch to light theme"}
-      className={`relative flex h-8 w-[62px] items-center rounded-full border border-cloud/15 bg-ink-soft/70 backdrop-blur transition-colors ${className}`}
+      className={`inline-flex h-8 w-8 items-center justify-center text-ink transition-colors hover:text-bronze ${className}`}
     >
-      <span className="pointer-events-none absolute inset-0 flex items-center justify-between px-2 text-mist/70">
-        <Sun size={13} />
-        <Moon size={13} />
-      </span>
-      <motion.span
-        className="absolute top-1 flex h-6 w-6 items-center justify-center rounded-full bg-gold text-onaccent shadow-[0_0_16px_-2px_var(--color-gold)]"
-        animate={{ left: isLight ? 4 : 32 }}
-        transition={SPRING.snappy}
-      >
-        {isLight ? <Sun size={13} /> : <Moon size={13} />}
-      </motion.span>
+      <svg width="22" height="22" viewBox="0 0 26 26" fill="none" aria-hidden>
+        <defs>
+          <clipPath id="vt-swatch">
+            <rect x="1" y="1" width="24" height="24" />
+          </clipPath>
+        </defs>
+        <g clipPath="url(#vt-swatch)">
+          <motion.rect
+            x="-13"
+            y="13"
+            width="52"
+            height="26"
+            fill="currentColor"
+            style={{ transformOrigin: "13px 13px" }}
+            initial={false}
+            animate={{ rotate: ready && isLight ? 225 : 45 }}
+            transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </g>
+        <rect
+          x="1"
+          y="1"
+          width="24"
+          height="24"
+          stroke="currentColor"
+          strokeWidth="1.25"
+        />
+      </svg>
     </button>
   );
 }

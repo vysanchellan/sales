@@ -1,7 +1,5 @@
-import { Phone, Mail, MapPin } from "lucide-react";
 import { InquiryForm } from "@/components/InquiryForm";
-import { TextReveal } from "@/components/animations/TextReveal";
-import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { DrawnRule } from "@/components/SectionHead";
 
 export const metadata = {
   title: "Contact — Virelle",
@@ -16,65 +14,67 @@ const offices = [
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-[1400px] px-5 pb-28 pt-32 md:px-10">
-      <div className="grid gap-16 lg:grid-cols-[1fr_1.1fr]">
+    <div className="mx-auto max-w-[1560px] px-6 pb-32 pt-32 md:px-12 md:pt-40">
+      <DrawnRule />
+      <p className="t-label pt-5 text-ink-soft">
+        <span className="tabular-nums text-bronze">01</span>
+        <span className="ml-3">Enquiries</span>
+      </p>
+
+      <div className="mt-8 grid gap-x-20 gap-y-16 lg:grid-cols-[1fr_1fr]">
         <div>
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-gold/70">Contact</p>
-          <TextReveal
-            as="h1"
-            text="Begin a [[conversation]]"
-            className="font-display text-4xl text-cloud sm:text-5xl md:text-7xl"
-          />
-          <ScrollReveal delay={0.15}>
-            <p className="mt-6 max-w-md text-mist">
-              Tell us what you're looking for — or what you're ready to let go of. An advisor will
-              respond, discreetly, within one business day.
-            </p>
-          </ScrollReveal>
+          <h1 className="t-display t-d1 max-w-[10ch] text-ink">
+            Begin a conversation
+          </h1>
+          <p className="t-lead mt-10 max-w-[42ch] text-ink-soft">
+            Tell us what you are looking for — or what you are ready to let go
+            of. An advisor will respond, discreetly, within one business day.
+          </p>
 
-          <ScrollReveal delay={0.25}>
-            <div className="mt-10 space-y-6">
-              <a
-                href="mailto:hello@virelle.com"
-                className="flex items-center gap-3 text-cloud transition-colors hover:text-gold"
-              >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
-                  <Mail size={16} />
-                </span>
-                hello@virelle.com
-              </a>
-              <a
-                href="tel:+442071004455"
-                className="flex items-center gap-3 text-cloud transition-colors hover:text-gold"
-              >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
-                  <Phone size={16} />
-                </span>
-                +44 20 7100 4455
-              </a>
+          <dl className="mt-14 border-t border-rule">
+            <div className="flex items-baseline justify-between border-b border-rule py-4">
+              <dt className="t-label text-ink-soft">Email</dt>
+              <dd className="m-0">
+                <a
+                  href="mailto:hello@virelle.com"
+                  className="t-small text-ink underline-offset-4 hover:text-bronze hover:underline"
+                >
+                  hello@virelle.com
+                </a>
+              </dd>
             </div>
-          </ScrollReveal>
+            <div className="flex items-baseline justify-between border-b border-rule py-4">
+              <dt className="t-label text-ink-soft">Telephone</dt>
+              <dd className="m-0">
+                <a
+                  href="tel:+442071004455"
+                  className="t-small tabular-nums text-ink underline-offset-4 hover:text-bronze hover:underline"
+                >
+                  +44 20 7100 4455
+                </a>
+              </dd>
+            </div>
+          </dl>
 
-          <ScrollReveal delay={0.35}>
-            <div className="mt-12 grid gap-6 sm:grid-cols-3">
-              {offices.map((o) => (
-                <div key={o.city}>
-                  <p className="flex items-center gap-1 text-sm text-gold-light">
-                    <MapPin size={13} /> {o.city}
-                  </p>
-                  <p className="mt-1 text-xs leading-relaxed text-mist">{o.detail}</p>
-                  <p className="text-xs text-mist">{o.phone}</p>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
+          <ul className="mt-14 grid list-none gap-8 p-0 sm:grid-cols-3">
+            {offices.map((o) => (
+              <li key={o.city} className="border-t border-rule pt-4">
+                <p className="t-label text-bronze">{o.city}</p>
+                <p className="t-small mt-2 text-ink-soft">{o.detail}</p>
+                <p className="t-small tabular-nums text-ink-soft">{o.phone}</p>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <ScrollReveal delay={0.2}>
-          <div className="rounded-lg border border-cloud/10 bg-ink-soft p-6 md:p-8">
+        <div className="lg:pt-4">
+          <h2 className="t-label border-b border-rule pb-3 text-ink-soft">
+            Enquiry
+          </h2>
+          <div className="mt-8">
             <InquiryForm />
           </div>
-        </ScrollReveal>
+        </div>
       </div>
     </div>
   );

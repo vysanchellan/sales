@@ -1,110 +1,143 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useId } from "react";
-import { EASE } from "@/lib/animations";
 
-// Virelle monogram: an angular "V" that reads as a valley / vista, drawn from a
-// single stroke and crowned with a small apex gem.
-const V_PATH = "M14 24 L50 82 L86 24";
-const APEX = { cx: 50, cy: 16, r: 5.2 };
+/* ===========================================================================
+   The logotype is drawn, not set.
+
+   Every letter is constructed on one modular grid — cap height 72, stroke 5.5,
+   a single 36-unit half-module governing every bowl, arm and crossbar. Six of
+   the seven letters in VIRELLE are straight-line-only; only the R carries a
+   curve, and that curve is a true semicircle of exactly one module. Drawing it
+   in strokes rather than filled outlines is deliberate: it is the same line
+   weight and the same miter joins as the property plans, so the mark and the
+   drawings read as one hand.
+   =========================================================================== */
+
+const H = 72; // cap height
+const M = 36; // the half-module every curve and crossbar derives from
+
+// Letterforms, in grid order. x is the left edge of each advance.
+const LETTERS: string[] = [
+  // V — two diagonals to a mitred point that runs past the baseline. That
+  // overshoot is the signature: the mark ends in a surveyor's point.
+  `M0,0 L26,${H} L52,0`,
+  // I — a single stem
+  `M74,0 L74,${H}`,
+  // R — stem, one-module bowl, leg struck from the bowl's foot
+  `M96,${H} L96,0`,
+  `M96,0 H124 A${M / 2},${M / 2} 0 0 1 124,${M} H96`,
+  `M118,${M} L144,${H}`,
+  // E — stem and three arms, the middle one held one module short
+  `M162,0 L162,${H}`,
+  `M162,0 H206`,
+  `M162,${M} H198`,
+  `M162,${H} H206`,
+  // L
+  `M224,0 L224,${H}`,
+  `M224,${H} H266`,
+  // L
+  `M284,0 L284,${H}`,
+  `M284,${H} H326`,
+  // E
+  `M344,0 L344,${H}`,
+  `M344,0 H388`,
+  `M344,${M} H380`,
+  `M344,${H} H388`,
+];
+
+const STROKE = 7;
+const VIEWBOX = "-5 -5 398 103";
+const RATIO = 398 / 103;
 
 /**
- * The animated brand mark. When `animate` is set it draws itself on: the "V"
- * traces via pathLength, the gem scales in, then a soft gradient fill blooms —
- * the signature load animation.
+ * The full wordmark. `draw` traces it on once — used only in the hero, where
+ * it doubles as the site's statement that everything here is drawn.
  */
-export function LogoMark({
-  size = 40,
-  animate = false,
+export function Logotype({
   className = "",
+  height = 22,
+  draw = false,
+  tone = "current",
 }: {
-  size?: number;
-  animate?: boolean;
   className?: string;
+  height?: number;
+  draw?: boolean;
+  tone?: "current" | "plate";
 }) {
-  const id = useId().replace(/:/g, "");
-  const grad = `vg-${id}`;
-  const glow = `vgl-${id}`;
+  const stroke = tone === "plate" ? "var(--color-plate-ink)" : "currentColor";
 
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
+      viewBox={VIEWBOX}
+      height={height}
+      width={height * RATIO}
       fill="none"
+      role="img"
+      aria-label="Virelle"
       className={className}
-      aria-hidden
+      style={{ overflow: "visible" }}
     >
-      <defs>
-        <linearGradient id={grad} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="var(--color-gold)" />
-          <stop offset="0.55" stopColor="var(--color-gold-light)" />
-          <stop offset="1" stopColor="var(--color-indigo-light)" />
-        </linearGradient>
-        <radialGradient id={glow} cx="0.5" cy="0.4" r="0.6">
-          <stop offset="0" stopColor="var(--color-gold)" stopOpacity="0.35" />
-          <stop offset="1" stopColor="var(--color-gold)" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-
-      {animate && (
-        <motion.circle
-          cx="50"
-          cy="50"
-          r="44"
-          fill={`url(#${glow})`}
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.4, duration: 1.2, ease: EASE.outExpo }}
-          style={{ transformOrigin: "center" }}
-        />
-      )}
-
-      <motion.path
-        d={V_PATH}
-        stroke={`url(#${grad})`}
-        strokeWidth={8}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        initial={animate ? { pathLength: 0, opacity: 0 } : false}
-        animate={animate ? { pathLength: 1, opacity: 1 } : undefined}
-        transition={{ duration: 1.5, ease: EASE.outExpo }}
-      />
-
-      <motion.circle
-        cx={APEX.cx}
-        cy={APEX.cy}
-        r={APEX.r}
-        fill={`url(#${grad})`}
-        initial={animate ? { scale: 0, opacity: 0 } : false}
-        animate={animate ? { scale: 1, opacity: 1 } : undefined}
-        transition={{ delay: 1.15, duration: 0.6, ease: EASE.outExpo }}
-        style={{ transformOrigin: "50px 16px" }}
-      />
+      <g
+        stroke={stroke}
+        strokeWidth={STROKE}
+        strokeLinecap="butt"
+        strokeLinejoin="miter"
+        strokeMiterlimit={8}
+      >
+        {LETTERS.map((d, i) =>
+          draw ? (
+            <motion.path
+              key={i}
+              d={d}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{
+                duration: 1.1,
+                delay: 0.18 + i * 0.045,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            />
+          ) : (
+            <path key={i} d={d} />
+          )
+        )}
+      </g>
     </svg>
   );
 }
 
-/** Nav / footer lockup: static mark + wordmark. `light` forces ivory over a
- * dark hero regardless of theme. */
-export function Logo({
+/**
+ * The mark alone — the wordmark's V at the same weight and the same miter.
+ * No second element; the letter is the mark.
+ */
+export function Mark({
+  size = 20,
   className = "",
-  markSize = 26,
-  light = false,
+  tone = "current",
 }: {
+  size?: number;
   className?: string;
-  markSize?: number;
-  light?: boolean;
+  tone?: "current" | "plate";
 }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
-      <LogoMark size={markSize} />
-      <span
-        className={`font-display text-2xl tracking-[0.02em] ${light ? "text-snow" : "text-cloud"}`}
-      >
-        VIREL<span className="living-gradient">L</span>E
-      </span>
-    </span>
+    <svg
+      viewBox="-5 -5 62 103"
+      height={size}
+      width={(size * 62) / 103}
+      fill="none"
+      aria-hidden
+      className={className}
+      style={{ overflow: "visible" }}
+    >
+      <path
+        d={`M0,0 L26,${H} L52,0`}
+        stroke={tone === "plate" ? "var(--color-plate-ink)" : "currentColor"}
+        strokeWidth={STROKE}
+        strokeLinecap="butt"
+        strokeLinejoin="miter"
+        strokeMiterlimit={8}
+      />
+    </svg>
   );
 }

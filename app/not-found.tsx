@@ -1,19 +1,26 @@
 import Link from "next/link";
+import { IconArrowRight } from "@/components/Icons";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center px-5 text-center">
-      <span className="font-display text-8xl text-gold/30">404</span>
-      <h1 className="mt-4 font-display text-3xl text-cloud">This address is off-market</h1>
-      <p className="mt-3 max-w-sm text-mist">
-        The page you're looking for isn't part of the portfolio. Let's get you back to something
-        worth viewing.
+    <div className="mx-auto flex min-h-[72vh] max-w-[1560px] flex-col justify-center px-6 md:px-12">
+      <p className="t-label text-bronze">Sheet not found</p>
+      <h1 className="t-display t-d1 mt-6 max-w-[14ch] text-ink">
+        This address is off-market
+      </h1>
+      <p className="t-lead mt-8 max-w-[42ch] text-ink-soft">
+        The page you are looking for is not part of the portfolio. The register
+        is a short document — everything in it is one click away.
       </p>
       <Link
         href="/"
-        className="mt-8 rounded-full bg-gold px-7 py-3 text-sm font-medium text-onaccent"
+        className="t-label group mt-10 inline-flex w-fit items-center gap-3 border-b border-bronze pb-2 text-bronze"
       >
-        Return home
+        Return to the register
+        <IconArrowRight
+          size={16}
+          className="transition-transform duration-500 group-hover:translate-x-1"
+        />
       </Link>
     </div>
   );

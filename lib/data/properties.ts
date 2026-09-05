@@ -28,7 +28,7 @@ const base: Base[] = [
     sqm: 720,
     type: "estate",
     rooms: [
-      room("Arrival", "A gated drive opens onto terraces suspended above the sea.", "1613490493576-7fde63acd811"),
+      room("Arrival", "A gated drive opens onto terraces suspended above the sea.", "1776886099987-dda9bed02cb6"),
       room("The Salon", "Frescoed ceilings meet quiet contemporary restraint.", "1600607687939-ce8a6c25118c"),
       room("The Kitchen", "A working kitchen built around a marble island.", "1600047509807-ba8f99d2cdde"),
       room("Primary Suite", "The bed faces the water; the water is the only art.", "1600585152915-d208bec867a1"),
@@ -64,7 +64,7 @@ const base: Base[] = [
     sqm: 410,
     type: "apartment",
     rooms: [
-      room("The Approach", "A private lift opens directly into a gallery hall.", "1567016432779-094069958ea5"),
+      room("The Approach", "A private lift opens directly into a gallery hall.", "1776831234992-57ee0eaa9bbf"),
       room("The Living Room", "Floor-to-ceiling glass frames the London skyline.", "1522708323590-d24dbb6b0267"),
       room("The Kitchen", "A chef's kitchen in book-matched stone and brass.", "1600047509358-9dc75507daeb"),
       room("Primary Suite", "A calm, low-lit retreat above the city.", "1600210492486-724fe5c67fb0"),
@@ -135,7 +135,7 @@ const base: Base[] = [
     sqm: 940,
     type: "estate",
     rooms: [
-      room("The Bastide", "A honey-stone bastide anchors forty hectares.", "1583608205776-bfd35f0d9f83"),
+      room("The Bastide", "A honey-stone bastide anchors forty hectares.", "1785603097626-097285b5b0a5"),
       room("The Salon", "Beamed ceilings and light the colour of the valley.", "1493809842364-78817add7ffb"),
       room("The Cellar", "A vaulted cellar for the estate's own vintage.", "1586023492125-27b2c045efd7"),
       room("A Bedroom", "Shuttered calm above the vines.", "1600210491369-e753d80a41f3"),
@@ -206,7 +206,7 @@ const base: Base[] = [
     sqm: 480,
     type: "house",
     rooms: [
-      room("Arrival", "A serene lakefront home behind a quiet gate.", "1568605114967-8130f3a36994"),
+      room("Arrival", "A serene lakefront home behind a quiet gate.", "1687890989242-61988e6c5f8c"),
       room("The Living Room", "Wide oak floors and a wood-burning core.", "1502672260266-1c1ef2d93688"),
       room("The Kitchen", "A kitchen built for gathering.", "1560448204-e02f11c3d0e2"),
       room("Primary Suite", "The garden runs to the water's edge.", "1600121848594-d8644e57abab"),
@@ -241,7 +241,7 @@ const base: Base[] = [
     sqm: 180,
     type: "apartment",
     rooms: [
-      room("The Building", "Camden rooftops and canals, from above.", "1531572753322-ad063cecc140"),
+      room("The Building", "Camden rooftops and canals, from above.", "1708986264399-0bfa78aa3c1b"),
       room("The Loft", "Double-height ceilings and exposed steelwork.", "1616486338812-3dadae4b4ace"),
       room("The Kitchen", "Warm timber softens the industrial bones.", "1616594039964-ae9021a400a0"),
       room("The Mezzanine", "A studio floats above the living space.", "1600585153490-76fb20a32601"),
@@ -276,7 +276,7 @@ const base: Base[] = [
     sqm: 62000,
     type: "land",
     rooms: [
-      room("The Ridge", "Six hectares of elevated, building-ready land.", "1523712999610-f77fbcfc3843"),
+      room("The Ridge", "Six hectares of elevated, building-ready land.", "1770129617107-eb5f013de53d"),
       room("The Panorama", "Uninterrupted views toward the Monts de Vaucluse.", "1466692476868-aef1dfb1e735"),
       room("Olive Terraces", "Mature terraces run down the south-facing slope.", "1518495973542-4542c06a5843"),
       room("The Valley", "A green valley falls away below the plot.", "1441974231531-c6227db76b6e"),
@@ -310,7 +310,7 @@ const base: Base[] = [
     sqm: 640,
     type: "house",
     rooms: [
-      room("The Façade", "White stucco on a private garden square.", "1600585154526-990dced4db0d"),
+      room("The Façade", "White stucco on a private garden square.", "1764416166527-2081e20fe47c"),
       room("The Drawing Room", "Original cornicing, restored to the year.", "1616137466211-f939a420be84"),
       room("The Dining Room", "A garden-level room for long dinners.", "1615529182904-14819c35db37"),
       room("Primary Suite", "Six storeys served by a passenger lift.", "1618221195710-dd6b41faaea6"),
@@ -345,7 +345,7 @@ const base: Base[] = [
     sqm: 500,
     type: "estate",
     rooms: [
-      room("The Cliff", "A modernist villa on the Faraglioni cliffs.", "1600596542815-ffad4c1539a9"),
+      room("The Cliff", "A villa held on the cliff above the Faraglioni.", "1759097247817-7611910ae819"),
       room("The Terraces", "Sculpted white terraces cascade to the sea.", "1489424731084-a5d8b219a5bb"),
       room("The Living Room", "Light, air, and an endless blue.", "1502005229762-cf1b2da7c5d6"),
       room("A Bedroom", "Simple rooms that defer to the view.", "1554995207-c18c203602cb"),
@@ -410,11 +410,3 @@ export function formatPrice(price: number, status: PropertyStatus): string {
   }).format(price);
   return status === "for-rent" ? `${formatted}/mo` : formatted;
 }
-
-// A curated cinematic reel for the homepage scroll sequence.
-export const cinematicReel: Room[] = [
-  properties[2].rooms[0], // glasshouse arrival
-  properties[0].rooms[1], // villa salon
-  properties[1].rooms[1], // penthouse living
-  properties[0].rooms[4], // amalfi view
-];

@@ -1,73 +1,290 @@
 @import "tailwindcss";
-@plugin "tailwindcss-animate";
+
+/* ===========================================================================
+   VIRELLE — design tokens
+   ---------------------------------------------------------------------------
+   Two surfaces (paper / raised), two inks (primary / soft), one hairline, and
+   ONE accent: bronze. The bronze has exactly one job — it is the annotation
+   layer. Dimension lines, active state, the drawn plan. It is never decoration.
+   =========================================================================== */
 
 @theme {
-  /* Warm espresso base */
-  --color-ink: #120e0a;
-  --color-ink-soft: #1a1410;
-  --color-ink-mute: #262019;
-  --color-cloud: #f3ece1;
-  --color-mist: #a3958a;
+  /* Surfaces — dark is the default. No pure black. */
+  --color-paper: #14120f;
+  --color-paper-raised: #1c1916;
+  --color-paper-sunk: #0f0d0b;
 
-  /* Primary accent — burnished terracotta (token kept as "gold" so utility
-     classes cascade) */
-  --color-gold: #c97a4a;
-  --color-gold-light: #e7b48c;
-  --color-gold-deep: #9c5830;
-  /* Secondary accent — honey (token kept as "indigo") */
-  --color-indigo: #d9a441;
-  --color-indigo-light: #ecc98a;
+  /* Ink. No pure white. */
+  --color-ink: #efeae1;
+  --color-ink-soft: #9a9086;
 
-  /* Text that sits on an accent fill (flips per theme for contrast) */
-  --color-onaccent: #180e07;
+  /* Hairlines. The drawing register is built entirely from these. */
+  --color-rule: #2e2a25;
+  --color-rule-strong: #4a443c;
 
-  /* Theme-invariant tokens for text/scrims over photography — imagery keeps
-     a dark cinematic treatment in BOTH themes so overlays never wash out */
-  --color-night: #120e0a;
-  --color-snow: #f3ece1;
-  --color-ember: #e7b48c;
+  /* The single accent. */
+  --color-bronze: #c89a63;
+  --color-bronze-deep: #a87c47;
 
-  --font-display: var(--font-fraunces), "Georgia", "Times New Roman", serif;
+  /* Text that sits on a bronze fill. */
+  --color-on-bronze: #14120f;
+
+  /* Plate tokens — fixed in BOTH themes. Photography keeps one treatment so a
+     caption over an image never has to be re-solved per theme. */
+  --color-plate: #14120f;
+  --color-plate-ink: #efeae1;
+  --color-plate-accent: #d9b184;
+
+  --font-display: var(--font-bodoni), "Didot", "Bodoni MT", Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-drawer: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-sheet: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Light — warm stone and off-white. Same tokens, re-valued, so every utility
+   flips at once. Bronze deepens to hold 4.5:1 on stone. */
+html.light {
+  color-scheme: light;
+  --color-paper: #eae5dc;
+  --color-paper-raised: #f6f3ed;
+  --color-paper-sunk: #ded8cd;
+
+  --color-ink: #1c1915;
+  --color-ink-soft: #635b52;
+
+  --color-rule: #d2cabc;
+  --color-rule-strong: #b0a698;
+
+  --color-bronze: #8a6224;
+  --color-bronze-deep: #6f4d19;
+
+  --color-on-bronze: #f6f3ed;
 }
 
 :root {
   color-scheme: dark;
 }
 
-/* Light theme — the same tokens, re-valued. Because every utility resolves a
-   CSS variable at runtime, flipping these flips the whole site. Accent-text
-   tokens (gold-light, indigo) darken so they stay legible on light surfaces. */
-html.light {
-  color-scheme: light;
-  /* Warm paper */
-  --color-ink: #f4efe6;
-  --color-ink-soft: #fdfaf4;
-  --color-ink-mute: #e9e1d2;
-  --color-cloud: #241a12;
-  --color-mist: #71634f;
-
-  /* Accents deepen for legibility on light surfaces */
-  --color-gold: #a85a2c;
-  --color-gold-light: #8f4a22;
-  --color-gold-deep: #753a18;
-  --color-indigo: #9a7420;
-  --color-indigo-light: #82611b;
-
-  /* On the deepened light-mode accents, button text must be light to read */
-  --color-onaccent: #fdfaf4;
-}
-
 * {
   box-sizing: border-box;
 }
 
-/* Circular theme-switch reveal (View Transitions). The new theme wipes in from
-   the toggle; the old layer holds still beneath it. */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* Real body copy: 15px / 1.7, slight negative tracking. Not 16/1.5. */
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  letter-spacing: -0.006em;
+  overflow-x: hidden;
+  /* Lining tabular figures everywhere by default — this is a site of numbers. */
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1, "kern" 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Type scale. Every step has a real size, a real leading and real tracking.
+   --------------------------------------------------------------------------- */
+
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  letter-spacing: -0.028em;
+  line-height: 0.94;
+}
+
+/* Display steps */
+.t-d1 {
+  font-size: clamp(2.75rem, 6.4vw, 6.25rem);
+  line-height: 0.93;
+  letter-spacing: -0.032em;
+}
+.t-d2 {
+  font-size: clamp(2.125rem, 4.6vw, 3.875rem);
+  line-height: 0.98;
+  letter-spacing: -0.026em;
+}
+.t-d3 {
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.t-d4 {
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  line-height: 1.2;
+  letter-spacing: -0.014em;
+}
+
+/* Lead paragraph — the one place we allow generous size. */
+.t-lead {
+  font-size: 1.0625rem;
+  line-height: 1.76;
+  letter-spacing: -0.008em;
+}
+
+.t-small {
+  font-size: 0.8125rem;
+  line-height: 1.62;
+  letter-spacing: -0.002em;
+}
+
+/* The drafting label. Used for every field name, every section marker. */
+.t-label {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Numerals set as a schedule would set them. */
+.t-figure {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------------------------
+   Focus. Visible, bronze, offset — never removed.
+   --------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--color-bronze);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+::selection {
+  background: var(--color-bronze);
+  color: var(--color-on-bronze);
+}
+
+/* Scrollbar — hairline, matches the register. */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-rule-strong);
+}
+
+/* ---------------------------------------------------------------------------
+   The plan. A single drafting grammar, defined once, used by every drawing.
+   --------------------------------------------------------------------------- */
+
+.plan {
+  --wall: var(--color-ink);
+  --annot: var(--color-bronze);
+  /* Set per drawing from its viewBox width, so a narrow townhouse sheet and a
+     wide estate sheet annotate at the same size on screen. */
+  --pscale: 1;
+}
+
+/* Line weights are absolute, the way a drawing pen is absolute — a 0.5 mm pen
+   does not get thicker because the sheet is smaller. Rather than
+   vector-effect: non-scaling-stroke (which breaks the stroke-dash the drawing
+   animation runs on), every weight is divided back out by the sheet's own
+   scale, so all ten drawings ink at the same weight on screen. */
+.plan-wall,
+.plan-partition,
+.plan-glazing,
+.plan-swing,
+.plan-site,
+.plan-dim {
+  fill: none;
+}
+
+/* Poché — the cut wall. Heaviest line on the sheet. */
+.plan-wall {
+  stroke: var(--wall);
+  stroke-width: calc(1.05px * var(--pscale));
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+}
+/* Interior partitions read lighter than structure. */
+.plan-partition {
+  stroke: var(--wall);
+  stroke-width: calc(0.58px * var(--pscale));
+  stroke-linecap: butt;
+}
+/* Glazing — the thin line inboard of the wall. */
+.plan-glazing {
+  stroke: var(--wall);
+  stroke-width: calc(0.36px * var(--pscale));
+}
+/* Door swing arcs. */
+.plan-swing {
+  stroke: var(--wall);
+  stroke-width: calc(0.3px * var(--pscale));
+  opacity: 0.5;
+}
+/* Anything outside the envelope: terrace, garden, water, site boundary. */
+.plan-site {
+  stroke: var(--wall);
+  stroke-width: calc(0.36px * var(--pscale));
+  stroke-dasharray: 3.5 3.5;
+  opacity: 0.42;
+}
+/* The annotation layer — the only place bronze appears in a drawing. */
+.plan-dim {
+  stroke: var(--annot);
+  stroke-width: calc(0.36px * var(--pscale));
+}
+.plan-dim-text {
+  fill: var(--annot);
+  font-family: var(--font-sans);
+  font-size: calc(6.5px * var(--pscale));
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.plan-room-text {
+  fill: var(--wall);
+  font-family: var(--font-sans);
+  font-size: calc(6px * var(--pscale));
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.58;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion. Two interactions carry this site; both respect the OS setting.
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* A plan must never stay half-drawn when motion is off. */
+  .plan [stroke-dasharray] {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* The theme wipe. The incoming surface is drawn out over the old one, which
+   holds still underneath — a wipe, not a cross-fade. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -80,20 +297,7 @@ html.light {
   z-index: 1;
 }
 
-html {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-body {
-  background: var(--color-ink);
-  color: var(--color-cloud);
-  font-family: var(--font-sans);
-  margin: 0;
-  overflow-x: hidden;
-}
-
-/* Lenis smooth-scroll baseline */
+/* Lenis baseline */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -101,114 +305,6 @@ html.lenis body {
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
 .lenis.lenis-stopped {
   overflow: hidden;
-}
-
-::selection {
-  background: var(--color-gold);
-  color: var(--color-ink);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 9px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-ink);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-ink-mute);
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold-deep);
-}
-
-.font-display {
-  font-family: var(--font-display);
-  font-weight: 480;
-  letter-spacing: -0.025em;
-  font-optical-sizing: auto;
-  font-variation-settings: "SOFT" 40, "WONK" 0;
-}
-
-/* Living gradient — tonal jade drift, deliberately restrained (no rainbow) */
-.living-gradient {
-  background: linear-gradient(
-    100deg,
-    var(--color-gold-deep) 0%,
-    var(--color-gold) 30%,
-    var(--color-gold-light) 50%,
-    var(--color-gold) 70%,
-    var(--color-gold-deep) 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradient-drift 9s linear infinite;
-}
-
-@keyframes gradient-drift {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 300% 50%;
-  }
-}
-
-@keyframes blob-drift {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(4%, -6%) scale(1.08);
-  }
-  66% {
-    transform: translate(-5%, 4%) scale(0.94);
-  }
-}
-
-.blob-drift {
-  animation: blob-drift 22s ease-in-out infinite;
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.grain::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-  .living-gradient {
-    animation: none;
-    background-position: 0% 50%;
-  }
 }

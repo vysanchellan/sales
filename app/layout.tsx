@@ -1,36 +1,33 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Bodoni_Moda, Inter } from "next/font/google";
 import "./globals.css";
 
-// Editorial pairing: Fraunces (high-contrast serif with optical sizing) for
-// display, Inter for UI text. Loaded as CSS variables so globals.css owns the
-// font stacks.
-const fraunces = Fraunces({
+// Bodoni Moda: a true Didone. Vertical stress, hairline thins, rational
+// construction — the letterform equivalent of a measured drawing. The optical
+// size axis is what makes it work at both 96px and 15px.
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["opsz", "SOFT", "WONK"],
+  variable: "--font-bodoni",
+  axes: ["opsz"],
+  display: "swap",
 });
+
+// One clean UI face, carrying labels, body and every numeral in the schedule.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
+
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { MotionProvider } from "@/components/MotionProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { CursorGlow } from "@/components/animations/CursorGlow";
-import { ScrollProgress } from "@/components/animations/ScrollProgress";
 
 export const metadata: Metadata = {
   title: "Virelle — Architecturally Significant Homes",
   description:
-    "A private brokerage for architecturally significant homes across Europe. Discretion, pace, and an eye for the enduring.",
-  keywords: ["luxury real estate", "estates", "penthouses", "villas", "Virelle"],
-  openGraph: {
-    title: "Virelle — Architecturally Significant Homes",
-    description: "A private brokerage for the enduring.",
-    type: "website",
-  },
+    "A private brokerage representing architecturally significant estates, penthouses and land across Europe.",
 };
 
 export default function RootLayout({
@@ -39,11 +36,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`grain ${fraunces.variable} ${inter.variable}`}
+      className={`${bodoni.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
       <head>
-        {/* Apply the saved theme before paint to avoid a flash of the wrong one */}
         <script
           dangerouslySetInnerHTML={{
             __html:
@@ -52,12 +48,16 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-bronze focus:px-4 focus:py-2 focus:text-on-bronze"
+        >
+          Skip to content
+        </a>
         <MotionProvider>
           <SmoothScrollProvider>
-            <ScrollProgress />
-            <CursorGlow />
             <Navbar />
-            <main>{children}</main>
+            <main id="main">{children}</main>
             <Footer />
           </SmoothScrollProvider>
         </MotionProvider>

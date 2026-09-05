@@ -1,88 +1,95 @@
-import { ArrowRight } from "lucide-react";
-import { BrandStory } from "@/components/sections/BrandStory";
-import { AboutStats } from "@/components/sections/AboutStats";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { TextReveal } from "@/components/animations/TextReveal";
-import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import { MagneticButton } from "@/components/animations/MagneticButton";
+import Link from "next/link";
+import { DrawnRule } from "@/components/SectionHead";
+import { IconArrow } from "@/components/Icons";
 
 export const metadata = {
   title: "The Firm — Virelle",
-  description: "Nearly three decades placing people in the right home.",
+  description: "A private brokerage representing architecturally significant homes.",
 };
 
-const values = [
+/* TODO — UNVERIFIED CONTENT.
+   The years and events below are placeholder narrative carried over from the
+   original build. They are not sourced. Replace with the firm's real history
+   before this goes near a client, or cut the dates and keep the prose. The
+   fabricated performance statistics that used to sit on this page (homes
+   placed, average days on market, client-satisfaction percentage) have been
+   removed outright rather than restyled. */
+const chapters = [
   {
-    title: "Discretion",
-    body: "Most of what we do is never listed. The best homes change hands in a conversation, not a campaign.",
+    n: "01",
+    year: "1998",
+    t: "A quiet beginning",
+    b: "Founded above a bookshop in Marylebone with a single mandate and a conviction that the right home is found, not sold.",
   },
   {
-    title: "Patience",
-    body: "We would rather tell you to wait than to buy. The right home is worth the right moment.",
+    n: "02",
+    year: "2007",
+    t: "Across the water",
+    b: "The first Continental office opens in Zürich. The portfolio grows deliberately — never more than we can represent with full attention.",
   },
   {
-    title: "Craft",
-    body: "We represent architecture we believe in — and present it with the care it was built with.",
+    n: "03",
+    year: "2015",
+    t: "The coastal chapter",
+    b: "An Amalfi desk is established. Waterfront and architectural work becomes a defining thread of the firm's identity.",
+  },
+  {
+    n: "04",
+    year: "Today",
+    t: "The same conviction",
+    b: "Three cities, one bench of specialists, and an unfashionable respect for the long view. We still measure success in the right fit, not the fastest close.",
   },
 ];
 
 export default function AboutPage() {
   return (
-    <div className="pt-32">
-      <section className="mx-auto max-w-4xl px-5 text-center">
-        <p className="mb-3 text-xs uppercase tracking-[0.3em] text-gold/70">The Firm</p>
-        <TextReveal
-          as="h1"
-          text="Nearly three decades placing people in the [[right]] home"
-          className="font-display text-3xl leading-[1.08] text-cloud sm:text-4xl md:text-6xl"
-        />
-        <ScrollReveal delay={0.2}>
-          <p className="mx-auto mt-6 max-w-xl text-mist">
-            Virelle is a private brokerage, not a portal. We keep the portfolio small on purpose, so
-            that every home receives the full attention of a specialist who knows its market
-            intimately.
-          </p>
-        </ScrollReveal>
-      </section>
+    <div className="mx-auto max-w-[1560px] px-6 pb-32 pt-32 md:px-12 md:pt-40">
+      <DrawnRule />
+      <p className="t-label pt-5 text-ink-soft">
+        <span className="tabular-nums text-bronze">01</span>
+        <span className="ml-3">The Firm</span>
+      </p>
+
+      <h1 className="t-display t-d1 mt-8 max-w-[16ch] text-ink">
+        The right home is found, not sold
+      </h1>
+
+      <p className="t-lead mt-10 max-w-[54ch] text-ink-soft">
+        Virelle is a private brokerage, not a portal. We keep the portfolio
+        small on purpose, so that every home receives the full attention of a
+        specialist who knows its market intimately — and so that every drawing
+        we publish is one we made ourselves.
+      </p>
+
+      <ol className="mt-24 list-none border-t border-rule p-0 md:mt-32">
+        {chapters.map((c) => (
+          <li
+            key={c.n}
+            className="grid gap-x-10 gap-y-4 border-b border-rule py-10 md:grid-cols-[3rem_7rem_minmax(0,16rem)_minmax(0,1fr)] md:py-14"
+          >
+            <span className="t-label tabular-nums text-bronze">{c.n}</span>
+            <span className="t-figure text-xl text-ink">{c.year}</span>
+            <h2 className="t-display t-d4 m-0 text-ink">{c.t}</h2>
+            <p className="t-small m-0 max-w-[56ch] text-ink-soft">{c.b}</p>
+          </li>
+        ))}
+      </ol>
 
       <div className="mt-24">
-        <BrandStory />
+        <h2 className="t-display t-d2 max-w-[16ch] text-ink">
+          Meet the people behind the portfolio
+        </h2>
+        <Link
+          href="/agents"
+          className="t-label group mt-8 inline-flex items-center gap-3 border-b border-bronze pb-2 text-bronze"
+        >
+          Our advisors
+          <IconArrow
+            size={15}
+            className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </Link>
       </div>
-
-      <section className="mx-auto max-w-[1400px] px-5 py-24 md:px-10">
-        <div className="grid gap-8 md:grid-cols-3">
-          {values.map((v, i) => (
-            <ScrollReveal key={v.title} delay={i * 0.1}>
-              <div className="h-full rounded-lg border border-cloud/10 bg-ink-soft p-8">
-                <span className="font-display text-5xl text-gold/30">0{i + 1}</span>
-                <h3 className="mt-4 font-display text-2xl text-cloud">{v.title}</h3>
-                <p className="mt-3 text-mist">{v.body}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      <AboutStats />
-      <Testimonials />
-
-      <section className="mx-auto max-w-3xl px-5 py-28 text-center">
-        <TextReveal
-          as="h2"
-          text="Meet the people behind the [[portfolio]]"
-          className="font-display text-3xl text-cloud sm:text-4xl md:text-5xl"
-        />
-        <ScrollReveal delay={0.2} className="mt-8 flex justify-center">
-          <MagneticButton
-            as="a"
-            href="/agents"
-            className="group flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-onaccent"
-          >
-            Our advisors
-            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-          </MagneticButton>
-        </ScrollReveal>
-      </section>
     </div>
   );
 }

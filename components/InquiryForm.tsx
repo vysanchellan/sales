@@ -156,7 +156,7 @@ export function InquiryForm({
       </button>
 
       {!FORM_ENDPOINT && (
-        <p className="t-label text-ink-soft/70">
+        <p className="t-label text-ink-soft">
           Demo mode — no handler connected
         </p>
       )}

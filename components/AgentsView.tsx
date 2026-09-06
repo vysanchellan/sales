@@ -34,7 +34,10 @@ export function AgentsView() {
                   alt={a.name}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover"
+                  /* Four portraits shot in four different places will never sit
+                     together in colour. Greyscale is the masthead convention and
+                     it lets the bench read as one bench. */
+                  className="object-cover grayscale"
                 />
               </div>
 

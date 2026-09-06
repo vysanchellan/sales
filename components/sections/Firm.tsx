@@ -40,13 +40,17 @@ export function Firm() {
       </div>
 
       <dl className="mt-16 border-t border-rule md:mt-20">
+        {/* A <div> inside a <dl> may hold only <dt> and <dd> — the clause
+            number lives inside the term, not beside it. */}
         {clauses.map((c) => (
           <div
             key={c.n}
-            className="grid gap-x-8 gap-y-3 border-b border-rule py-8 md:grid-cols-[3rem_minmax(0,12rem)_minmax(0,1fr)] md:py-10"
+            className="grid gap-x-8 gap-y-3 border-b border-rule py-8 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:py-10"
           >
-            <span className="t-label tabular-nums text-bronze">{c.n}</span>
-            <dt className="t-display t-d4 text-ink">{c.t}</dt>
+            <dt className="flex items-baseline gap-5">
+              <span className="t-label tabular-nums text-bronze">{c.n}</span>
+              <span className="t-display t-d4 text-ink">{c.t}</span>
+            </dt>
             <dd className="t-small m-0 max-w-[56ch] text-ink-soft">{c.b}</dd>
           </div>
         ))}

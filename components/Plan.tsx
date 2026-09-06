@@ -214,7 +214,7 @@ export function Plan({
             textAnchor="middle"
             className="plan-room-text"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.62 }}
+            animate={{ opacity: 0.7 }}
             transition={{ duration: 0.45, delay: CUE.labels + i * 0.05 }}
           >
             {r.t}

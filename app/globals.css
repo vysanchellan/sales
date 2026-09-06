@@ -57,8 +57,10 @@ html.light {
   --color-rule: #d2cabc;
   --color-rule-strong: #b0a698;
 
-  --color-bronze: #8a6224;
-  --color-bronze-deep: #6f4d19;
+  /* Bronze deepens on stone. #8a6224 measured 4.30:1 against the paper — under
+     the 4.5 floor — so it is taken down until it clears at 5.09:1. */
+  --color-bronze: #7d5720;
+  --color-bronze-deep: #664614;
 
   --color-on-bronze: #f6f3ed;
 }
@@ -160,10 +162,14 @@ body {
    Focus. Visible, bronze, offset — never removed.
    --------------------------------------------------------------------------- */
 
+/* Longhands, not the shorthand: `outline: 2px solid var(--x)` was resolving
+   its colour to currentColor, leaving the ring the same value as the text it
+   sits on. Set separately it holds the bronze. */
 :focus-visible {
-  outline: 2px solid var(--color-bronze);
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: var(--color-bronze);
   outline-offset: 3px;
-  border-radius: 1px;
 }
 :focus:not(:focus-visible) {
   outline: none;
@@ -260,7 +266,7 @@ body {
   font-size: calc(6px * var(--pscale));
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  opacity: 0.58;
+  opacity: 0.7;
 }
 
 /* ---------------------------------------------------------------------------

@@ -121,11 +121,23 @@ function Sheet({
           onClick={handle}
           aria-expanded={open}
           aria-controls={panelId}
-          className="group grid w-full grid-cols-[2.25rem_1fr_2rem] items-baseline gap-x-4 gap-y-1 py-6 text-left transition-colors md:grid-cols-[3rem_minmax(0,1.5fr)_minmax(0,1fr)_9.5rem_5.5rem_10rem_2rem] md:items-center md:gap-x-6 md:py-7"
+          className="group grid w-full grid-cols-[4.75rem_minmax(0,1fr)_1.75rem] items-start gap-x-5 gap-y-1.5 py-5 text-left md:grid-cols-[2.5rem_5.5rem_minmax(0,1.35fr)_minmax(0,1fr)_9.5rem_5.5rem_10rem_1.75rem] md:items-center md:gap-x-6 md:py-4"
         >
-          {/* sheet ref */}
+          {/* A plate on every line. The register is never text-only, even
+              closed — the drawing is the extra layer, not the replacement. */}
+          <span className="relative col-start-1 row-span-4 row-start-1 block aspect-[4/3] w-full overflow-hidden bg-paper-raised md:col-start-2 md:row-span-1 md:row-start-1">
+            <Image
+              src={p.images[0]}
+              alt=""
+              fill
+              sizes="140px"
+              className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+            />
+          </span>
+
+          {/* sheet ref — its own column on desktop, inline on mobile */}
           <span
-            className={`t-label tabular-nums transition-colors ${
+            className={`t-label hidden tabular-nums transition-colors md:col-start-1 md:row-start-1 md:block ${
               open ? "text-bronze" : "text-ink-soft group-hover:text-bronze"
             }`}
           >
@@ -133,43 +145,40 @@ function Sheet({
           </span>
 
           {/* name */}
-          <span className="min-w-0">
-            <span className="t-display t-d4 block truncate text-ink">
-              {p.title}
+          <span className="col-start-2 row-start-1 min-w-0 md:col-start-3">
+            <span className="t-label mr-3 tabular-nums text-ink-soft md:hidden">
+              {refOf(p)}
             </span>
-            {/* location rides under the name on small screens */}
-            <span className="t-small mt-1 block text-ink-soft md:hidden">
-              {p.location}, {p.city}
-            </span>
+            <span className="t-display t-d4 text-ink">{p.title}</span>
           </span>
 
-          {/* control — always last in the visual row on mobile */}
+          {/* control */}
           <span
-            className={`justify-self-end transition-colors md:order-last ${
+            className={`col-start-3 row-start-1 justify-self-end transition-colors md:col-start-8 ${
               open ? "text-bronze" : "text-ink-soft group-hover:text-ink"
             }`}
           >
             <IconCross size={18} open={open} />
           </span>
 
-          {/* location (desktop column) */}
-          <span className="t-small hidden truncate text-ink-soft md:block">
+          {/* location */}
+          <span className="t-small col-start-2 row-start-2 truncate text-ink-soft md:col-start-4 md:row-start-1">
             {p.location}, {p.city}
           </span>
 
           {/* type · year */}
-          <span className="t-label hidden whitespace-nowrap text-ink-soft md:block">
+          <span className="t-label hidden whitespace-nowrap text-ink-soft md:col-start-5 md:row-start-1 md:block">
             {TYPE_LABEL[p.type]}
             {p.yearBuilt > 0 && <> · {p.yearBuilt}</>}
           </span>
 
           {/* area */}
-          <span className="t-small hidden tabular-nums text-ink-soft md:block md:text-right">
+          <span className="t-small hidden tabular-nums text-ink-soft md:col-start-6 md:row-start-1 md:block md:text-right">
             {p.sqm.toLocaleString()} m²
           </span>
 
           {/* price */}
-          <span className="col-start-2 flex items-baseline gap-3 md:col-start-auto md:justify-end">
+          <span className="col-start-2 row-start-3 flex items-baseline gap-3 md:col-start-7 md:row-start-1 md:justify-end">
             {status && (
               <span className="t-label whitespace-nowrap text-bronze-deep">
                 {status}
@@ -180,8 +189,8 @@ function Sheet({
             </span>
           </span>
 
-          {/* mobile-only meta line */}
-          <span className="t-label col-start-2 text-ink-soft md:hidden">
+          {/* mobile meta line */}
+          <span className="t-label col-start-2 row-start-4 text-ink-soft md:hidden">
             {TYPE_LABEL[p.type]}
             {p.yearBuilt > 0 && <> · {p.yearBuilt}</>} · {p.sqm.toLocaleString()} m²
           </span>

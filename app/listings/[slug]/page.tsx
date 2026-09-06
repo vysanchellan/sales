@@ -10,6 +10,7 @@ import {
 import { getAgent } from "@/lib/data/agents";
 import { getPlan } from "@/lib/data/plans";
 import { Plan } from "@/components/Plan";
+import { RoomWalkthrough } from "@/components/RoomWalkthrough";
 import { PropertyMap } from "@/components/PropertyMap";
 import { InquiryForm } from "@/components/InquiryForm";
 import { IconArrow } from "@/components/Icons";
@@ -59,7 +60,13 @@ export default async function PropertyPage({
   const ref = p.id.replace(/\D/g, "").padStart(2, "0");
 
   return (
-    <article className="mx-auto max-w-[1560px] px-6 pb-32 pt-32 md:px-12 md:pt-40">
+    <article>
+      {/* The room-by-room walkthrough opens the page, full bleed, on the cover
+          the visitor selected. The measured drawing follows it — you feel the
+          house first, then you read it. */}
+      <RoomWalkthrough rooms={p.rooms} title={p.title} />
+
+      <div className="mx-auto max-w-[1560px] px-6 pb-32 pt-20 md:px-12 md:pt-24">
       {/* --- title block --- */}
       <div className="border-t border-rule pt-5">
         <div className="flex items-baseline justify-between gap-6">
@@ -150,44 +157,10 @@ export default async function PropertyPage({
         </div>
       </div>
 
-      {/* --- plates --- */}
-      <section className="mt-28">
-        <h2 className="t-label border-t border-rule pt-5 text-ink-soft">
-          <span className="tabular-nums text-bronze">02</span>
-          <span className="ml-3">Plates</span>
-        </h2>
-
-        <div className="mt-12 space-y-20">
-          {p.rooms.map((r, i) => (
-            <figure key={r.name} className="m-0">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-paper-raised md:aspect-[2/1]">
-                <Image
-                  src={r.image}
-                  alt={`${p.title} — ${r.name}`}
-                  fill
-                  priority={i === 0}
-                  sizes="(max-width: 768px) 100vw, 90vw"
-                  className="object-cover"
-                />
-              </div>
-              <figcaption className="mt-4 grid gap-x-10 gap-y-2 border-t border-rule pt-4 md:grid-cols-[4rem_14rem_minmax(0,1fr)]">
-                <span className="t-label tabular-nums text-bronze">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="t-label text-ink">{r.name}</span>
-                <span className="t-small max-w-[60ch] text-ink-soft">
-                  {r.caption}
-                </span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
       {/* --- location --- */}
       <section className="mt-28">
         <h2 className="t-label border-t border-rule pt-5 text-ink-soft">
-          <span className="tabular-nums text-bronze">03</span>
+          <span className="tabular-nums text-bronze">01</span>
           <span className="ml-3">Location</span>
         </h2>
         <div className="mt-10">
@@ -203,7 +176,7 @@ export default async function PropertyPage({
       <section className="mt-28 grid gap-x-20 gap-y-14 lg:grid-cols-[1fr_1fr]">
         <div>
           <h2 className="t-label border-t border-rule pt-5 text-ink-soft">
-            <span className="tabular-nums text-bronze">04</span>
+            <span className="tabular-nums text-bronze">02</span>
             <span className="ml-3">Arrange a viewing</span>
           </h2>
           <p className="t-display t-d2 mt-10 max-w-[14ch] text-ink">
@@ -240,7 +213,7 @@ export default async function PropertyPage({
       {similar.length > 0 && (
         <section className="mt-28">
           <h2 className="t-label border-t border-rule pt-5 text-ink-soft">
-            <span className="tabular-nums text-bronze">05</span>
+            <span className="tabular-nums text-bronze">03</span>
             <span className="ml-3">Also on the register</span>
           </h2>
           <div className="mt-6">
@@ -265,6 +238,7 @@ export default async function PropertyPage({
           </div>
         </section>
       )}
+      </div>
     </article>
   );
 }

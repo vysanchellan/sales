@@ -25,7 +25,7 @@ const clauses = [
 export function Firm() {
   return (
     <section className="mx-auto max-w-[1560px] px-6 py-24 md:px-12 md:py-40">
-      <SectionHead index="02" label="The Firm" />
+      <SectionHead index="03" label="The Firm" />
 
       <div className="mt-14 grid gap-x-20 gap-y-12 lg:grid-cols-[1.1fr_1fr]">
         <h2 className="t-display t-d2 max-w-[16ch] text-ink">

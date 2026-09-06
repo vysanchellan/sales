@@ -410,3 +410,48 @@ export function formatPrice(price: number, status: PropertyStatus): string {
   }).format(price);
   return status === "for-rent" ? `${formatted}/mo` : formatted;
 }
+
+/* ---------------------------------------------------------------------------
+   The title sequence.
+
+   Four frames that read as one arrival — approach, interior, living space,
+   view — but each one is a real property from the register rather than a mood
+   image. The sequence is therefore a showcase, not decoration: every frame
+   carries its name, its address and its price, and goes to its own sheet.
+   --------------------------------------------------------------------------- */
+
+export interface ReelFrame {
+  kicker: string;
+  caption: string;
+  image: string;
+  slug: string;
+  title: string;
+  location: string;
+  city: string;
+  price: number;
+  status: PropertyStatus;
+}
+
+const frame = (i: number, roomIndex: number, kicker: string): ReelFrame => {
+  const prop = properties[i];
+  const r = prop.rooms[roomIndex];
+  return {
+    kicker,
+    caption: r.caption,
+    image: r.image,
+    slug: prop.slug,
+    title: prop.title,
+    location: prop.location,
+    city: prop.city,
+    price: prop.price,
+    status: prop.status,
+  };
+};
+
+// Four properties, four moods, none of them the hero image.
+export const cinematicReel: ReelFrame[] = [
+  frame(3, 0, "Arrival"),          // Domaine du Vallon — the bastide
+  frame(0, 1, "The Interior"),     // Villa Serena — the salon
+  frame(1, 1, "The Living Space"), // Marylebone Penthouse — the living room
+  frame(9, 0, "The View"),         // Capri Cliff Villa — the cliff
+];

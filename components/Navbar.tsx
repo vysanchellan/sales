@@ -40,20 +40,36 @@ export function Navbar() {
 
   useEffect(() => setOpen(false), [pathname]);
 
+  // The home page and every property sheet open on full-bleed photography, so
+  // an unscrolled bar sits on an image rather than on the page surface. There
+  // it uses the fixed plate tokens in BOTH themes — theme-coloured text over a
+  // photograph is a coin toss, and it loses over a bright sky.
+  const overImage =
+    (pathname === "/" || /^\/listings\/.+/.test(pathname)) && !scrolled;
+
   return (
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
-          scrolled
-            ? "border-rule bg-paper"
-            : "border-transparent bg-transparent"
+          scrolled ? "border-rule bg-paper" : "border-transparent bg-transparent"
         }`}
       >
-        <nav className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between px-6 md:px-12">
+        {/* A gradient, not a backdrop-filter: a blur on a fixed bar repaints the
+            whole viewport every scroll frame on a phone. This costs nothing. */}
+        {overImage && (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-plate/75 via-plate/35 to-transparent"
+          />
+        )}
+
+        <nav className="relative mx-auto flex h-[68px] max-w-[1560px] items-center justify-between px-6 md:px-12">
           <Link
             href="/"
             aria-label="Virelle — home"
-            className="text-ink transition-colors hover:text-bronze"
+            className={`transition-colors ${
+              overImage ? "text-plate-ink" : "text-ink hover:text-bronze"
+            }`}
           >
             <Logotype height={16} />
           </Link>
@@ -67,22 +83,32 @@ export function Navbar() {
                   href={l.href}
                   aria-current={active ? "page" : undefined}
                   className={`t-label transition-colors ${
-                    active ? "text-bronze" : "text-ink-soft hover:text-ink"
+                    overImage
+                      ? active
+                        ? "text-plate-accent"
+                        : "text-plate-ink/80 hover:text-plate-ink"
+                      : active
+                        ? "text-bronze"
+                        : "text-ink-soft hover:text-ink"
                   }`}
                 >
                   {l.label}
                 </Link>
               );
             })}
-            <ThemeToggle className="-mr-2" />
+            <ThemeToggle
+              className={`-mr-2 ${overImage ? "text-plate-ink hover:text-plate-accent" : ""}`}
+            />
           </div>
 
           <div className="flex items-center gap-1 md:hidden">
-            <ThemeToggle />
+            <ThemeToggle className={overImage ? "text-plate-ink" : ""} />
             <button
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="inline-flex h-8 w-8 items-center justify-center text-ink"
+              className={`inline-flex h-8 w-8 items-center justify-center ${
+                overImage ? "text-plate-ink" : "text-ink"
+              }`}
             >
               <IconMenu size={22} />
             </button>
